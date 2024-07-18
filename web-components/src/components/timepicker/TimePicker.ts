@@ -2,7 +2,7 @@ import "@/components/input/Input";
 import { Key } from "@/constants";
 import { customElementWithCheck } from "@/mixins/CustomElementCheck";
 import { now } from "@/utils/dateUtils";
-import { ValidationRegex } from "@/utils/validations.ts";
+import { ValidationRegex } from "@/utils/validations";
 import reset from "@/wc_scss/reset.scss";
 import { LitElement, PropertyValues, html, internalProperty, property } from "lit-element";
 import { nothing } from "lit-html";

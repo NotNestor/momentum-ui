@@ -2,7 +2,7 @@
 import "@/components/editable-textfield/EditableTextfield";
 import "@/components/button/Button";
 import { Input } from "@/components/input/Input";
-import { ValidationRegex } from "@/utils/validations.ts";
+import { ValidationRegex } from "@/utils/validations";
 import { customElement, html, LitElement, property } from "lit-element";
 import { nothing } from "lit-html";
 

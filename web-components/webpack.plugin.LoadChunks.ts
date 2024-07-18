@@ -1,7 +1,7 @@
 import { Compiler } from "webpack";
 import path = require("path");
+import webpack = require("webpack");
 
-const webpack = require("webpack");
 const { RawSource } = webpack.sources || require("webpack-sources");
 
 type Options = {
@@ -19,11 +19,29 @@ export default class WebpackLoadChunksPlugin {
   }
 
   apply(compiler: Compiler): void {
-    const isWebpack4 = webpack.version.startsWith("4.");
-    compiler.hooks[isWebpack4 ? "emit" : "thisCompilation"].tap(
-      "WebpackLoadChunksPlugin",
-      this.hookCallback.bind(this)
-    );
+    const isWebpack5 = webpack.version.startsWith("5.");
+    if (isWebpack5) {
+      compiler.hooks.thisCompilation.tap("WebpackLoadChunksPlugin", compilation => {
+        compilation.hooks.processAssets.tapAsync(
+          {
+            name: "WebpackLoadChunksPlugin",
+            stage: webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL
+          },
+          (assets, callback) => {
+            this.compilation = compilation;
+            this.fs = this.compilation.compiler.outputFileSystem;
+            this.addAssets();
+            callback();
+          }
+        );
+      });
+    } else {
+      const isWebpack4 = webpack.version.startsWith("4.");
+      compiler.hooks[isWebpack4 ? "emit" : "thisCompilation"].tap(
+        "WebpackLoadChunksPlugin",
+        this.hookCallback.bind(this)
+      );
+    }
   }
 
   hookCallback(compilation: object): void {
@@ -31,9 +49,11 @@ export default class WebpackLoadChunksPlugin {
     this.fs = this.compilation.compiler.outputFileSystem;
 
     const isWebpack4 = webpack.version.startsWith("4.");
+    const isWebpack5 = webpack.version.startsWith("5.");
+
     if (isWebpack4) {
       this.addAssets();
-    } else {
+    } else if (!isWebpack5) {
       this.compilation.hooks.processAssets.tap(
         {
           name: "WebpackLoadChunksPlugin",
