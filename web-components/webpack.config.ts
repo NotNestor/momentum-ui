@@ -127,12 +127,13 @@ export const commonDev = merge(common, {
         { from: `${pMomentum}/core/css/momentum-ui.min.css`, to: "css/momentum-ui.min.css" },
         { from: `${pMomentum}/core/css/momentum-ui.min.css.map`, to: "css/momentum-ui.min.css.map" },
         { from: `${pMomentum}/icons/css/momentum-ui-icons.min.css`, to: "css/momentum-ui-icons.min.css" },
-        { from: `${pCss}/*.css`, to: "css", noErrorOnMissing: true, globOptions: { dot: false, ignore: ["**/*.map"] } },
+        {
+          from: `${pCss}/*.css`,
+          to: ({ absoluteFilename }) => `css/${absoluteFilename ? path.basename(absoluteFilename) : "default.css"}`
+        },
         {
           from: `${pStats}/**/*.json`,
-          to: "stats",
-          noErrorOnMissing: true,
-          globOptions: { dot: false, ignore: ["**/*"] }
+          to: ({ absoluteFilename }) => `stats/${absoluteFilename ? path.basename(absoluteFilename) : "default.json"}`
         }
       ]
     })
@@ -248,9 +249,8 @@ const commonDist = merge(common, {
         { from: `${pMomentum}/icons/css/momentum-ui-icons.min.css`, to: "assets/styles/momentum-ui-icons.min.css" },
         {
           from: `${pCss}/*.css`,
-          to: "assets/styles",
-          noErrorOnMissing: true,
-          globOptions: { dot: false, ignore: ["**/*.map"] }
+          to: ({ absoluteFilename }) =>
+            `assets/styles/${absoluteFilename ? path.basename(absoluteFilename) : "default.css"}`
         }
       ]
     }),
