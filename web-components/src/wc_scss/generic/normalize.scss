@@ -119,9 +119,9 @@ abbr[title] {
   text-decoration: underline dotted; /* 2 */
 }
 
-/**
- * Prevent the duplicate application of `bolder` by the next rule in Safari 6.
- */
+
+// Prevent the duplicate application of `bolder` by the next rule in Safari 6.
+ 
 
 b,
 strong {

@@ -1,7 +1,6 @@
-import { Compiler } from "webpack";
+import webpack, { Compiler } from "webpack";
 import path = require("path");
 
-const webpack = require("webpack");
 const { RawSource } = webpack.sources || require("webpack-sources");
 
 type Options = {

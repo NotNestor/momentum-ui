@@ -36,18 +36,16 @@ const common: webpack.Configuration = {
       "@": pSrc,
       "@css": pCss,
       "@img": pImg
-    }
+    },
+    fallback: { timers: require.resolve("timers-browserify") }
   },
   module: {
     rules: [
       {
         test: /\.(png|svg|jpe?g)$/,
-        use: {
-          loader: "file-loader",
-          options: {
-            name: "images/[name].[hash:8].[ext]",
-            esModule: false
-          }
+        type: "asset/resource",
+        generator: {
+          filename: "images/[name].[hash:8][ext]"
         },
         include: pSrc
       }
@@ -121,21 +119,23 @@ export const commonDev = merge(common, {
       template: "./src/[sandbox]/index.html",
       favicon: "./src/[sandbox]/favicon.ico"
     }),
-    new CopyWebpackPlugin([
-      { from: `${pDesign}/dist/fonts`, to: "icons/fonts" },
-      { from: `${pDesign}/dist/fonts`, to: "fonts" },
-      { from: `${pDesign}/dist/data/MomentumFontIcons.css`, to: "css" },
-      { from: `${pDesign}/dist/data/MomentumFontIcons.min.css`, to: "css" },
-      { from: `${pMomentum}/core/fonts`, to: "fonts" },
-      { from: `${pMomentum}/core/images`, to: "images" },
-      { from: `${pMomentum}/icons/fonts`, to: "icons/fonts" },
-      { from: `${pMomentum}/icons/fonts`, to: "fonts" },
-      { from: `${pMomentum}/core/css/momentum-ui.min.css`, to: "css" },
-      { from: `${pMomentum}/core/css/momentum-ui.min.css.map`, to: "css" },
-      { from: `${pMomentum}/icons/css/momentum-ui-icons.min.css`, to: "css" },
-      { from: `${pCss}/*.css`, to: "css", flatten: true },
-      { from: `${pStats}/**/*.json`, to: "stats", flatten: true }
-    ])
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: `${pDesign}/dist/fonts`, to: "icons/fonts" },
+        { from: `${pDesign}/dist/fonts`, to: "fonts" },
+        { from: `${pDesign}/dist/data/MomentumFontIcons.css`, to: "css" },
+        { from: `${pDesign}/dist/data/MomentumFontIcons.min.css`, to: "css" },
+        { from: `${pMomentum}/core/fonts`, to: "fonts" },
+        { from: `${pMomentum}/core/images`, to: "images" },
+        { from: `${pMomentum}/icons/fonts`, to: "icons/fonts" },
+        { from: `${pMomentum}/icons/fonts`, to: "fonts" },
+        { from: `${pMomentum}/core/css/momentum-ui.min.css`, to: "css" },
+        { from: `${pMomentum}/core/css/momentum-ui.min.css.map`, to: "css" },
+        { from: `${pMomentum}/icons/css/momentum-ui-icons.min.css`, to: "css" },
+        { from: `${pCss}/*.css`, to: "css/[name][ext]" },
+        { from: `${pStats}/**/*.json`, to: "stats/[name][ext]" }
+      ]
+    })
   ]
 });
 
@@ -221,7 +221,7 @@ const commonDist = merge(common, {
     filename: "[name].js",
     chunkFilename: "chunks/md-[id].js",
     libraryTarget: "umd",
-    jsonpFunction: "momentum-web-components-[id]"
+    chunkLoadingGlobal: "momentum-web-components-[id]"
   },
   optimization: {
     splitChunks: {
@@ -231,28 +231,30 @@ const commonDist = merge(common, {
       minSize: 0
     }
   },
-  externals: [nodeExternals({ modulesFromFile: true, importType: "umd" })],
+  externals: [nodeExternals({ modulesFromFile: true, importType: "umd" }) as any],
   plugins: [
     new CleanWebpackPlugin(),
     new WebpackLoadChunksPlugin({
       trimNameEnd: 6
     }),
-    new CopyWebpackPlugin([
-      { from: `${pDesign}/dist/fonts`, to: "assets/fonts" },
-      { from: `${pDesign}/dist/fonts`, to: "assets/icons/fonts" },
-      { from: `${pDesign}/dist/data/MomentumFontIcons.css`, to: "assets/styles" },
-      { from: `${pDesign}/dist/data/MomentumFontIcons.min.css`, to: "assets/styles" },
-      { from: `${pDesign}/dist/fonts`, to: "assets/fonts" },
-      { from: `${pDesign}/dist/data/scss/`, to: "assets/styles" },
-      { from: `${pMomentum}/core/fonts`, to: "assets/fonts" },
-      { from: `${pMomentum}/core/images`, to: "assets/images" },
-      { from: `${pMomentum}/icons/fonts`, to: "assets/fonts" },
-      { from: `${pMomentum}/icons/fonts`, to: "assets/icons/fonts" },
-      { from: `${pMomentum}/core/css/momentum-ui.min.css`, to: "assets/styles" },
-      { from: `${pMomentum}/core/css/momentum-ui.min.css.map`, to: "assets/styles" },
-      { from: `${pMomentum}/icons/css/momentum-ui-icons.min.css`, to: "assets/styles" },
-      { from: `${pCss}/*.css`, to: "assets/styles", flatten: true }
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: `${pDesign}/dist/fonts`, to: "assets/fonts" },
+        { from: `${pDesign}/dist/fonts`, to: "assets/icons/fonts" },
+        { from: `${pDesign}/dist/data/MomentumFontIcons.css`, to: "assets/styles" },
+        { from: `${pDesign}/dist/data/MomentumFontIcons.min.css`, to: "assets/styles" },
+        { from: `${pDesign}/dist/fonts`, to: "assets/fonts" },
+        { from: `${pDesign}/dist/data/scss/`, to: "assets/styles" },
+        { from: `${pMomentum}/core/fonts`, to: "assets/fonts" },
+        { from: `${pMomentum}/core/images`, to: "assets/images" },
+        { from: `${pMomentum}/icons/fonts`, to: "assets/fonts" },
+        { from: `${pMomentum}/icons/fonts`, to: "assets/icons/fonts" },
+        { from: `${pMomentum}/core/css/momentum-ui.min.css`, to: "assets/styles" },
+        { from: `${pMomentum}/core/css/momentum-ui.min.css.map`, to: "assets/styles" },
+        { from: `${pMomentum}/icons/css/momentum-ui-icons.min.css`, to: "assets/styles" },
+        { from: `${pCss}/*.css`, to: "assets/styles/[name][ext]" }
+      ]
+    }),
     new RemovePlugin({
       after: {
         log: false,
