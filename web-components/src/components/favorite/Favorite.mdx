@@ -1,5 +1,5 @@
-import { Meta, Story, Props } from "@storybook/addon-docs/blocks";
-import { Favorite } from "./Favorite.ts";
+import { Meta, Story } from "@storybook/addon-docs/blocks";
+import { Favorite } from "./Favorite";
 
 # Favorite
 
@@ -23,5 +23,3 @@ Renders `<md-favorite/>` with dynamic properties
 <md-favorite @favorite-toggle=${(action('favorite-toggle'))} id="favorite-switch" ?checked=${true} ?disabled=${false} value="Select Favorite">
 </md-favorite>
 ```
-
-<Props of={"md-favorite"} />
