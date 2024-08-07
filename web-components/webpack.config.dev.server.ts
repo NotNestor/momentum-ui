@@ -19,7 +19,8 @@ export default merge<Configuration>(commonDev, {
     client: {
       overlay: {
         errors: true,
-        warnings: false
+        warnings: false,
+        runtimeErrors: false
       }
     }
   }

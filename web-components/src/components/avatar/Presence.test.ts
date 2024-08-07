@@ -1,7 +1,7 @@
 import "./Presence";
 import { Presence } from "./Presence";
 import { fixture, fixtureCleanup } from "@open-wc/testing-helpers";
-import { html } from "lit-element";
+import { html } from "lit";
 import { getPresenceIconColor } from "./Presence.utils";
 
 describe("Presence", () => {

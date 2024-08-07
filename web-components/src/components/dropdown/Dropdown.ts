@@ -10,11 +10,11 @@ import "@/components/icon/Icon";
 import { Key } from "@/constants";
 import { customElementWithCheck, FocusMixin } from "@/mixins";
 import reset from "@/wc_scss/reset.scss";
-import { internalProperty, LitElement, property, PropertyValues, query, queryAll } from "lit-element";
-import { html } from "lit-html";
-import { classMap } from "lit-html/directives/class-map.js";
-import { ifDefined } from "lit-html/directives/if-defined";
-import { repeat } from "lit-html/directives/repeat.js";
+import { html, LitElement, PropertyValues } from "lit";
+import { property, query, queryAll, state } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
+import { ifDefined } from "lit/directives/if-defined.js";
+import { repeat } from "lit/directives/repeat.js";
 import styles from "./scss/module.scss";
 
 const EMPTY_KEY = "";
@@ -45,11 +45,11 @@ export namespace Dropdown {
     @property({ type: Boolean, attribute: "allow-unselected", reflect: true }) allowUnselected = false;
     @property({ type: Number, attribute: "visible-option", reflect: true }) visibleOptions = 8;
 
-    @internalProperty() private renderOptions: RenderOptionMember[] = [];
-    @internalProperty() private selectedKey: string = EMPTY_KEY;
+    @state() private renderOptionMemberList: RenderOptionMember[] = [];
+    @state() private selectedKey: string = EMPTY_KEY;
 
-    @internalProperty() private expanded = false;
-    @internalProperty() private focusedIndex = -1;
+    @state() private expanded = false;
+    @state() private focusedIndex = -1;
 
     @query("label") label!: HTMLLabelElement;
     @query("ul.md-dropdown-list") optionsList!: HTMLUListElement;
@@ -90,7 +90,7 @@ export namespace Dropdown {
           this.updateRenderOptions();
         }
         if (name === "selectedKey") {
-          const idx = this.renderOptions.findIndex(o => o.key === this.selectedKey);
+          const idx = this.renderOptionMemberList.findIndex(o => o.key === this.selectedKey);
           if (idx !== -1) {
             this.focusToIndex(idx);
           }
@@ -137,7 +137,7 @@ export namespace Dropdown {
         });
       }
 
-      this.renderOptions = renderOptions;
+      this.renderOptionMemberList = renderOptions;
     }
 
     async updateListDOM() {
@@ -240,7 +240,7 @@ export namespace Dropdown {
 
     select() {
       if (this.focusedIndex !== -1) {
-        const renderOption = this.renderOptions[this.focusedIndex];
+        const renderOption = this.renderOptionMemberList[this.focusedIndex];
 
         const nextSelectedKey = renderOption.key;
         const prevSelectedKey = this.selectedKey;
@@ -343,20 +343,20 @@ export namespace Dropdown {
     }
 
     focusFirst() {
-      if (this.renderOptions.length) {
+      if (this.renderOptionMemberList.length) {
         this.focusedIndex = 0;
       }
     }
 
     focusLast() {
-      if (this.renderOptions.length) {
-        this.focusedIndex = this.renderOptions.length - 1;
+      if (this.renderOptionMemberList.length) {
+        this.focusedIndex = this.renderOptionMemberList.length - 1;
       }
     }
 
     focusNext() {
-      if (this.renderOptions.length) {
-        if (this.focusedIndex !== -1 && this.focusedIndex < this.renderOptions.length - 1) {
+      if (this.renderOptionMemberList.length) {
+        if (this.focusedIndex !== -1 && this.focusedIndex < this.renderOptionMemberList.length - 1) {
           this.focusedIndex++;
         } else {
           this.focusFirst();
@@ -365,7 +365,7 @@ export namespace Dropdown {
     }
 
     focusPrev() {
-      if (this.renderOptions.length) {
+      if (this.renderOptionMemberList.length) {
         if (this.focusedIndex > 0) {
           this.focusedIndex--;
         } else {
@@ -375,8 +375,8 @@ export namespace Dropdown {
     }
 
     focusToIndex(n: number) {
-      if (this.renderOptions.length) {
-        if (n >= 0 && n <= this.renderOptions.length - 1) {
+      if (this.renderOptionMemberList.length) {
+        if (n >= 0 && n <= this.renderOptionMemberList.length - 1) {
           this.focusedIndex = n;
         }
       }
@@ -442,7 +442,7 @@ export namespace Dropdown {
 
     get labelTitle() {
       if (this.selectedKey) {
-        const option = this.renderOptions.find(o => o.key === this.selectedKey);
+        const option = this.renderOptionMemberList.find(o => o.key === this.selectedKey);
         if (option) {
           return option.value;
         }
@@ -486,7 +486,7 @@ export namespace Dropdown {
             tabindex=${ifDefined(this.customTabIndex === -1 ? undefined : this.customTabIndex)}
           >
             ${repeat(
-              this.renderOptions,
+              this.renderOptionMemberList,
               o => o.key,
               (o, idx) => html`
                 <li

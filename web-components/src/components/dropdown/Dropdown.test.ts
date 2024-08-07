@@ -241,7 +241,7 @@ describe("Dropdown Component", () => {
 
       await elementUpdated(dropdown);
 
-      expect(dropdown["renderOptions"].length).toBe(4);
+      expect(dropdown["renderOptionMemberList"].length).toBe(4);
     });
 
     it("should set correct aria attributes", async () => {

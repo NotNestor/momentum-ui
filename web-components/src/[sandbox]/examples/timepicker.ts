@@ -1,5 +1,5 @@
 import "@/index";
-import { html } from "lit-element";
+import { html } from "lit";
 import "@/components/timepicker/TimePicker";
 
 export const timePickerTemplate = html`

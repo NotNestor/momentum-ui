@@ -8,14 +8,14 @@
 
 import "@/components/loading/Loading";
 import { ThemeNameValues } from "@/components/theme/Theme";
-import { withA11y } from "@storybook/addon-a11y";
+
 import { boolean, select, withKnobs } from "@storybook/addon-knobs";
-import { html } from "lit-element";
+import { html } from "lit";
 
 export default {
   title: "Components/Loading",
   component: "md-loading",
-  decorators: [withKnobs, withA11y],
+  decorators: [withKnobs],
   argTypes: {
     loadingClassMap: { table: { disable: true } }
   },

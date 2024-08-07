@@ -10,15 +10,15 @@ import "@/components/tabs/Tab";
 import "@/components/tabs/TabPanel";
 import "@/components/tabs/Tabs";
 import { ThemeNameValues } from "@/components/theme/Theme";
-import { withA11y } from "@storybook/addon-a11y";
+
 import { action } from "@storybook/addon-actions";
 import { boolean, number, select, withKnobs } from "@storybook/addon-knobs";
-import { html } from "lit-element";
+import { html } from "lit";
 
 export default {
   title: "Components/Tabs",
   component: "md-tabs",
-  decorators: [withKnobs, withA11y],
+  decorators: [withKnobs],
   argTypes: {
     overflowLabel: { table: { disable: true } },
     tabSlotElement: { table: { disable: true } },

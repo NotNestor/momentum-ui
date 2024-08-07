@@ -6,16 +6,16 @@
  *
  */
 
-import reset from "@/wc_scss/reset.scss";
-import { html, internalProperty, LitElement, property } from "lit-element";
+import "@/components/icon/Icon";
+import { Key } from "@/constants";
 import { FocusMixin } from "@/mixins";
 import { customElementWithCheck } from "@/mixins/CustomElementCheck";
-import "@/components/icon/Icon";
+import reset from "@/wc_scss/reset.scss";
+import { html, LitElement, nothing } from "lit";
+import { property, state } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
+import { ifDefined } from "lit/directives/if-defined.js";
 import styles from "./scss/module.scss";
-import { Key } from "@/constants";
-import { nothing } from "lit-html";
-import { classMap } from "lit-html/directives/class-map";
-import { ifDefined } from "lit-html/directives/if-defined";
 
 export namespace Favorite {
   @customElementWithCheck("md-favorite")
@@ -26,7 +26,7 @@ export namespace Favorite {
     @property({ type: String }) id = "";
     @property({ type: String }) label = "Favorite";
 
-    @internalProperty() private customId = "";
+    @state() private customId = "";
 
     connectedCallback() {
       super.connectedCallback();

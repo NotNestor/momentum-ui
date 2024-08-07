@@ -10,7 +10,7 @@ import {
   nextFrame,
   oneEvent
 } from "@open-wc/testing-helpers";
-import { html, PropertyValues } from "lit-element";
+import { html, PropertyValues } from "lit";
 import "./MenuOverlay";
 import { MenuOverlay, OverlaySizes } from "./MenuOverlay";
 

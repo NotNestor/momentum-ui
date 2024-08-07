@@ -6,10 +6,11 @@
  *
  */
 
-import reset from "@/wc_scss/reset.scss";
 import { customElementWithCheck } from "@/mixins/CustomElementCheck";
-import { html, LitElement, property } from "lit-element";
-import { classMap } from "lit-html/directives/class-map";
+import reset from "@/wc_scss/reset.scss";
+import { html, LitElement } from "lit";
+import { property } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
 import { Input } from "../input/Input"; // Keep type import as a relative path
 import styles from "./scss/module.scss";
 
@@ -46,10 +47,12 @@ export namespace HelpText {
 
     render() {
       return html`
-        <div class="md-input__message ${classMap(this.inputMessageClassMap)}" 
-            id=${this.id}
-            aria-live=${this.ariaLive}
-             role="alert">
+        <div
+          class="md-input__message ${classMap(this.inputMessageClassMap)}"
+          id=${this.id}
+          aria-live=${this.ariaLive}
+          role="alert"
+        >
           <md-icon name="${this.getIconName()}"></md-icon>
           <slot>${this.message}</slot>
         </div>

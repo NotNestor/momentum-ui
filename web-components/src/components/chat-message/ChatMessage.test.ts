@@ -1,7 +1,7 @@
 import "./ChatMessage";
 import { ChatMessage } from "./ChatMessage";
 import { elementUpdated, fixture, fixtureCleanup} from "@open-wc/testing-helpers";
-import { html } from "lit-element";
+import { html } from "lit";
 import { Avatar } from "../avatar/Avatar"; // Keep type import as a relative path
 
 describe("Chat Message Component", () => {

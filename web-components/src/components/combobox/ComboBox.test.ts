@@ -1,20 +1,12 @@
+import {
+    comboBoxComplexObjectOption,
+    comboBoxObjectOptions,
+    comboBoxOptions
+} from "@/[sandbox]/sandbox.mock";
 import "@/components/icon/Icon";
 import { Key } from "@/constants";
-import {
-  comboBoxComplexObjectOption,
-  comboBoxObjectLongOptions,
-  comboBoxObjectOptions,
-  comboBoxOptions
-} from "@/[sandbox]/sandbox.mock";
-import {
-  elementUpdated,
-  fixture,
-  fixtureCleanup,
-  html,
-  nextFrame,
-  oneEvent
-} from "@open-wc/testing-helpers";
-import { repeat } from "lit-html/directives/repeat";
+import { elementUpdated, fixture, fixtureCleanup, html, nextFrame, oneEvent } from "@open-wc/testing-helpers";
+import { repeat } from "lit/directives/repeat.js";
 import "./ComboBox";
 import { ComboBox } from "./ComboBox";
 
@@ -1541,7 +1533,6 @@ describe("Combobox Component", () => {
   });
 
   describe("Combobox with virtual scroll", () => {
-   
     test("should handle keyUp event", async () => {
       const el = await fixture<ComboBox.ELEMENT>(
         html`
@@ -1559,7 +1550,6 @@ describe("Combobox Component", () => {
       const mock = jest.fn();
 
       el.listBox!.style.maxHeight = mock();
-      
 
       expect(el.expanded).toBeTruthy();
       expect(mock).toBeCalled();

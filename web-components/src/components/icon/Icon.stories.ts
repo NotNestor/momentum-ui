@@ -9,16 +9,16 @@
 import "@/components/icon/Icon";
 import { ThemeNameValues } from "@/components/theme/Theme";
 import iconNames from "@momentum-ui/icons/data/momentumUiIconsNames.json";
-import { withA11y } from "@storybook/addon-a11y";
+
 import { action } from "@storybook/addon-actions";
 import { boolean, select, text, withKnobs } from "@storybook/addon-knobs";
-import { html } from "lit-element";
+import { html } from "lit";
 import { iconSize, iconType } from "./Icon"; // Keep type import as a relative path
 
 export default {
   title: "Components/Icon",
   component: "md-icon",
-  decorators: [withKnobs, withA11y],
+  decorators: [withKnobs],
   argTypes: {
     iconClassMap: { table: { disable: true } },
     iconStyleMap: { table: { disable: true } },

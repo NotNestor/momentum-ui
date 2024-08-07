@@ -1,3 +1,4 @@
+import { dirname, join } from "path";
 import * as webpack from "webpack";
 import { commonDev } from "../webpack.config";
 
@@ -14,19 +15,20 @@ const mergeUnique = (merger: Array<any>, mergee?: Array<any>) =>
 module.exports = {
   stories: [
     "../src/components/**/*.stories.ts",
-    "../src/components/**/*.stories.mdx",
+    "../src/components/**/*.mdx",
     "../src/internal-components/color-table/ColorTable.stories.ts",
-    "../src/internal-components/color-table/*.stories.mdx"
+    "../src/internal-components/color-table/*.mdx"
   ],
 
   addons: [
-    "@storybook/addon-knobs",
-    "@storybook/addon-a11y",
-    "@storybook/addon-docs",
-    "@storybook/addon-controls",
-    "@storybook/addon-actions",
-    "@storybook/addon-viewport",
-    "@storybook/addon-postcss"
+    getAbsolutePath("@storybook/addon-knobs"),
+    getAbsolutePath("@storybook/addon-a11y"),
+    getAbsolutePath("@storybook/addon-docs"),
+    getAbsolutePath("@storybook/addon-controls"),
+    getAbsolutePath("@storybook/addon-actions"),
+    getAbsolutePath("@storybook/addon-viewport"),
+    "@storybook/addon-webpack5-compiler-babel",
+    "@chromatic-com/storybook"
   ],
 
   webpackFinal: async (
@@ -37,6 +39,7 @@ module.exports = {
 
     // RESOLVE
     storybookConfig.resolve = storybookConfig.resolve || {};
+    storybookConfig.resolve.fallback = commonDev.resolve?.fallback;
 
     // EXTENSIONS
     storybookConfig.resolve.extensions = mergeUnique(
@@ -51,17 +54,28 @@ module.exports = {
     storybookConfig.module = storybookConfig.module || { rules: [] };
 
     // RULES
-    storybookConfig.module.rules = mergeUnique(storybookConfig.module.rules, commonDev.module?.rules || []);
+    storybookConfig.module.rules = mergeUnique(storybookConfig.module.rules || [], commonDev.module?.rules || []);
 
     // PLUGINS
 
     // Storybook production has it's own tuned HtmlWebpackPlugin
     const omitPluginNames = configType === "DEVELOPMENT" ? [] : ["HtmlWebpackPlugin"];
     
-    const plugins = (commonDev.plugins || []).filter(p => omitPluginNames.indexOf(p.constructor.name) === -1);
+    const plugins = (commonDev.plugins || []).filter(p => p && omitPluginNames.indexOf(p.constructor.name) === -1);
 
     storybookConfig.plugins = mergeUnique(storybookConfig.plugins || [], plugins);
 
     return storybookConfig;
-  }
+  },
+
+  framework: {
+    name: getAbsolutePath("@storybook/web-components-webpack5"),
+    options: {}
+  },
+
+  docs: {}
 };
+
+function getAbsolutePath(value: string): any {
+  return dirname(require.resolve(join(value, "package.json")));
+}

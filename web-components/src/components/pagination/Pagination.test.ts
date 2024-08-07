@@ -1,6 +1,6 @@
 import "./Pagination";
 import { Pagination } from "./Pagination";
-import { html } from "lit-element";
+import { html } from "lit";
 import { elementUpdated, fixture, fixtureCleanup } from "@open-wc/testing-helpers";
 
 describe("Pagination component", () => {

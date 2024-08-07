@@ -9,16 +9,14 @@
 import "@/components/badge/Badge";
 import "@/components/card/Card";
 import { ThemeNameValues } from "@/components/theme/Theme";
-import { withA11y } from "@storybook/addon-a11y";
 import { action } from "@storybook/addon-actions";
 import { array, boolean, select, text, withKnobs } from "@storybook/addon-knobs";
-import { html } from "lit-element";
-import { nothing } from "lit-html";
+import { html, nothing } from "lit";
 
 export default {
   title: "Components/Card",
   component: "md-card",
-  decorators: [withKnobs, withA11y],
+  decorators: [withKnobs],
   parameters: {
     a11y: {
       element: "md-card"

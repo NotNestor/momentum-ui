@@ -8,16 +8,16 @@
 
 import "@/components/grabber/Grabber";
 import { ThemeNameValues } from "@/components/theme/Theme";
-import { withA11y } from "@storybook/addon-a11y";
+
 import { action } from "@storybook/addon-actions";
 import { boolean, select, text, withKnobs } from "@storybook/addon-knobs";
-import { html } from "lit-element";
+import { html } from "lit";
 import mdx from "./Grabber.mdx";
 
 export default {
   title: "Components/Grabber",
   component: "md-grabber",
-  decorators: [withKnobs, withA11y],
+  decorators: [withKnobs],
   argTypes: {
     toggleSwitchClassMap: { table: { disable: true } },
     autofocus: { table: { disable: true } }

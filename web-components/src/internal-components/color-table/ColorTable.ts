@@ -1,18 +1,16 @@
 import "@/components/table-advanced/TableAdvanced";
-import { customElement, html, internalProperty, LitElement, PropertyValues } from "lit-element";
-import { colorTableData } from "@/wc_scss/colors/vars/color-table-data-string";
 import { TableAdvanced } from "@/components/table-advanced/TableAdvanced";
-import { nothing } from "lit-html";
-import { colorCellTemplates } from "./data";
-import { allColorTemplates } from "./utils";
+import { colorTableData } from "@/wc_scss/colors/vars/color-table-data-string";
 import reset from "@/wc_scss/reset.scss";
+import { html, LitElement, nothing, PropertyValues } from "lit";
+import { customElement, state } from "lit/decorators.js";
+import { colorCellTemplates } from "./data";
 import styles from "./scss/module.scss";
+import { allColorTemplates } from "./utils";
 
 @customElement("color-table")
 export class ColorTableSandbox extends LitElement {
-  @internalProperty() colorTokenTableData:
-    | { config: TableAdvanced.Config; data: TableAdvanced.Data }
-    | undefined = undefined;
+  @state() colorTokenTableData: { config: TableAdvanced.Config; data: TableAdvanced.Data } | undefined = undefined;
 
   firstUpdated(changedProperties: PropertyValues) {
     super.firstUpdated(changedProperties);

@@ -2,7 +2,7 @@ import "./Slider";
 import { Slider } from "./Slider";
 import { Key } from "@/constants";
 import { elementUpdated, fixture, fixtureCleanup, nextFrame, oneEvent } from "@open-wc/testing-helpers";
-import { html } from "lit-element";
+import { html } from "lit";
 
 describe("Slider Component", () => {
   let element: Slider.ELEMENT;

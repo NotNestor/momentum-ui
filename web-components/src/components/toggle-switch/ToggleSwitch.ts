@@ -7,12 +7,13 @@
  */
 import "@/components/label/Label";
 import { FocusMixin } from "@/mixins";
-import reset from "@/wc_scss/reset.scss";
 import { customElementWithCheck } from "@/mixins/CustomElementCheck";
-import { html, LitElement, property } from "lit-element";
-import { classMap } from "lit-html/directives/class-map";
+import reset from "@/wc_scss/reset.scss";
+import { html, LitElement } from "lit";
+import { property } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
+import { ifDefined } from "lit/directives/if-defined.js";
 import styles from "./scss/module.scss";
-import { ifDefined } from "lit-html/directives/if-defined";
 
 export const alignLabel = ["left", "right"] as const;
 const accessibleDescriptionLabelId = "md-toggle-switch__accessible-description";
@@ -48,7 +49,10 @@ export namespace ToggleSwitch {
       if (this.alignLabel === "left") {
         return html`
           <slot></slot>
-          <span class="md-toggle-switch__label__container md-toggle-switch__label__container__left" part="toggle-label"></span>
+          <span
+            class="md-toggle-switch__label__container md-toggle-switch__label__container__left"
+            part="toggle-label"
+          ></span>
         `;
       } else {
         return html`
@@ -79,11 +83,12 @@ export namespace ToggleSwitch {
           <md-label .htmlFor=${this.htmlId} class="md-toggle-switch__label">
             ${this.switchTemplate()}
           </md-label>
-          ${this.description && html`
-            <div id=${accessibleDescriptionLabelId} class="md-toggle-switch__accessible-description">
-              ${this.description}
-            </div>
-          `}
+          ${this.description &&
+            html`
+              <div id=${accessibleDescriptionLabelId} class="md-toggle-switch__accessible-description">
+                ${this.description}
+              </div>
+            `}
         </div>
       `;
     }

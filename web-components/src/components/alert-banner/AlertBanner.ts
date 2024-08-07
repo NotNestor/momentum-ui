@@ -4,15 +4,16 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
-*/
+ */
 
-import { Key } from "@/constants";
-import reset from "@/wc_scss/reset.scss";
-import { customElementWithCheck } from "@/mixins/CustomElementCheck";
-import { CSSResultArray, html, LitElement, property } from "lit-element";
-import { classMap } from "lit-html/directives/class-map.js";
 import "@/components/button/Button";
 import "@/components/icon/Icon";
+import { Key } from "@/constants";
+import { customElementWithCheck } from "@/mixins/CustomElementCheck";
+import reset from "@/wc_scss/reset.scss";
+import { CSSResultArray, html, LitElement } from "lit";
+import { property } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
 import styles from "./scss/module.scss";
 
 export namespace AlertBanner {

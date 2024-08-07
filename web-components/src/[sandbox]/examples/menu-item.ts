@@ -9,7 +9,7 @@
 import "@/components/menu/Menu";
 import "@/components/menu/MenuItem";
 import "@/components/icon/Icon";
-import { html } from "lit-element";
+import { html } from "lit";
 
 export const menuItemTemplate = html`
   <md-menu>

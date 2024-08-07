@@ -2,7 +2,7 @@ import "./Breadcrumb";
 import { Breadcrumb } from "./Breadcrumb";
 import { fixture, fixtureCleanup } from "@open-wc/testing-helpers";
 import { breadCrumb } from "@/[sandbox]/sandbox.mock";
-import { html } from "lit-element";
+import { html } from "lit";
 
 describe("Breadcrumb component", () => {
   afterEach(fixtureCleanup);

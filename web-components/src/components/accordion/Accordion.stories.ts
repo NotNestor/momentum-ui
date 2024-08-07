@@ -1,7 +1,7 @@
 import { ThemeNameValues } from "@/components/theme/Theme";
-import { withA11y } from "@storybook/addon-a11y";
+
 import { boolean, select, withKnobs } from "@storybook/addon-knobs";
-import { html } from "lit-element";
+import { html } from "lit";
 import "./Accordion";
 import mdx from "./Accordion.mdx";
 import "./AccordionItem";
@@ -9,7 +9,7 @@ import "./AccordionItem";
 export default {
   title: "Components/Accordion",
   component: "md-accordion",
-  decorators: [withKnobs, withA11y],
+  decorators: [withKnobs],
   parameters: {
     a11y: {
       element: "md-accordion"

@@ -37,7 +37,9 @@ const common: webpack.Configuration = {
       "@css": pCss,
       "@img": pImg
     },
-    fallback: { timers: require.resolve("timers-browserify") }
+    fallback: {
+      timers: require.resolve("timers-browserify")
+    }
   },
   module: {
     rules: [
@@ -136,7 +138,12 @@ export const commonDev = merge(common, {
         { from: `${pStats}/**/*.json`, to: "stats/[name][ext]" }
       ]
     })
-  ]
+  ],
+  resolve: {
+    fallback: {
+      timers: require.resolve("timers-browserify")
+    }
+  }
 });
 
 const dev = merge(commonDev, {

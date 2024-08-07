@@ -23,7 +23,8 @@
  * }
  */
 import { Key } from "@/constants";
-import { internalProperty, LitElement, property, PropertyValues } from "lit-element";
+import { LitElement, PropertyValues } from "lit";
+import { property, state } from "lit/decorators.js";
 import { DedupeMixin, wasApplied } from "./DedupeMixin";
 import { FocusClass, FocusEventDetail, FocusMixin } from "./FocusMixin";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -51,9 +52,9 @@ export const FocusTrapMixin = <T extends AnyConstructor<FocusClass & FocusTrapCl
     return base as ReturnType<() => T & AnyConstructor<FocusTrapClass & FocusTrapInterface & FocusClass>>;
   }
   class FocusTrap extends FocusMixin(base) {
-    @internalProperty() protected focusableElements: HTMLElement[] = [];
-    @internalProperty() protected initialFocusComplete = false;
-    @internalProperty() private focusableTimer: any = [];
+    @state() protected focusableElements: HTMLElement[] = [];
+    @state() protected initialFocusComplete = false;
+    @state() private focusableTimer: any = [];
     @property({ type: Boolean, reflect: true, attribute: "active-focus-trap" }) activeFocusTrap = false;
     @property({ type: Boolean, reflect: true, attribute: "prevent-click-outside" }) preventClickOutside = false;
     @property({ type: Number, reflect: true, attribute: "focus-trap-index" }) focusTrapIndex = -1;
@@ -237,7 +238,8 @@ export const FocusTrapMixin = <T extends AnyConstructor<FocusClass & FocusTrapCl
         if (activeIndex === -1 && this.focusTrapIndex - 1 > 0) {
           this.focusTrapIndex--;
         } else {
-          this.focusTrapIndex = activeIndex > (this.shouldWrapFocus() ? 1 : 0) ? activeIndex - 1 : this.focusableElements.length - 1;
+          this.focusTrapIndex =
+            activeIndex > (this.shouldWrapFocus() ? 1 : 0) ? activeIndex - 1 : this.focusableElements.length - 1;
         }
       } else if (activeIndex === -1 && this.focusTrapIndex + 1 < this.focusableElements.length) {
         this.focusTrapIndex++;
@@ -247,13 +249,14 @@ export const FocusTrapMixin = <T extends AnyConstructor<FocusClass & FocusTrapCl
           this.tryFocus(nextEleToFocus);
         }
       } else {
-        this.focusTrapIndex = activeIndex + 1 < this.focusableElements.length ? activeIndex + 1 : (this.shouldWrapFocus() ? 1 : 0);
+        this.focusTrapIndex =
+          activeIndex + 1 < this.focusableElements.length ? activeIndex + 1 : this.shouldWrapFocus() ? 1 : 0;
       }
     }
 
     handleFocusOnClear = () => {
       this.focusTrap(true);
-    }
+    };
 
     private hasAutofocus(element: HTMLElement) {
       return element.hasAttribute("autofocus");
@@ -282,11 +285,11 @@ export const FocusTrapMixin = <T extends AnyConstructor<FocusClass & FocusTrapCl
     }
 
     /**
-    * this method is used to set focus on trigger element by finding the focusable element in the trigger element.
-    *
-    * @param   triggerElement  The trigger element.
-    * @returns void
-    */
+     * this method is used to set focus on trigger element by finding the focusable element in the trigger element.
+     *
+     * @param   triggerElement  The trigger element.
+     * @returns void
+     */
     protected setFocusOnTrigger(triggerElement: HTMLElement) {
       let deepNestedTriggerElement;
       if (triggerElement.shadowRoot!) {
@@ -296,7 +299,7 @@ export const FocusTrapMixin = <T extends AnyConstructor<FocusClass & FocusTrapCl
       } else {
         deepNestedTriggerElement = this.findFocusable(triggerElement, new Set());
       }
-      if(deepNestedTriggerElement[0]){
+      if (deepNestedTriggerElement[0]) {
         const focusableIndex = this.findElement(deepNestedTriggerElement[0] as HTMLElement);
         this.focusTrapIndex = focusableIndex;
       }

@@ -1,14 +1,14 @@
 import { ThemeNameValues } from "@/components/theme/Theme";
 import { TIME_UNIT } from "@/constants";
-import { withA11y } from "@storybook/addon-a11y";
+
 import { boolean, select, text, withKnobs } from "@storybook/addon-knobs";
-import { html } from "lit-element";
+import { html } from "lit";
 import { timeSpecificity } from "./TimePicker"; // Keep type import as a relative path
 
 export default {
   title: "Components/Time Picker",
   component: "md-timepicker",
-  decorators: [withKnobs, withA11y],
+  decorators: [withKnobs],
   parameters: {
     a11y: {
       element: "md-timepicker"

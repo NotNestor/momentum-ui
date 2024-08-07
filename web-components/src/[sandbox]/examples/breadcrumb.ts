@@ -1,5 +1,5 @@
 import "@/components/breadcrumb/Breadcrumb";
-import { html } from "lit-element";
+import { html } from "lit";
 import { breadCrumb } from "@/[sandbox]/sandbox.mock";
 
 export const breadcrumbTemplate = html`

@@ -6,13 +6,13 @@
  *
  */
 
-import reset from "@/wc_scss/reset.scss";
 import { customElementWithCheck } from "@/mixins/CustomElementCheck";
-import { html, internalProperty, LitElement, property, PropertyValues, query, queryAll } from "lit-element";
+import reset from "@/wc_scss/reset.scss";
+import { html, LitElement, PropertyValues } from "lit";
+import { property, queryAll, state } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
 import Papa from "papaparse";
-import { classMap } from "lit-html/directives/class-map.js";
 import styles from "./scss/module.scss";
-import { nothing } from "lit-html";
 
 export const formatType = ["number", "default"] as const;
 type Warn = { [key: number]: any };
@@ -32,10 +32,10 @@ export namespace Table {
     @property({ type: Boolean, attribute: "no-borders" }) noBorders = false;
     @property({ type: String }) format: Table.Format = "default";
     @property({ type: Array }) warning: (any | Warn)[] = [];
-    @property({ type: Array }) errors:  (any | Warn)[] = [];
+    @property({ type: Array }) errors: (any | Warn)[] = [];
 
-    @internalProperty() private sort = { columnName: "", sortting: false };
-    @internalProperty() csvData: any = undefined;
+    @state() private sort = { columnName: "", sortting: false };
+    @state() csvData: any = undefined;
 
     @queryAll('.md-table__body tr[role="row"]') rowTable?: HTMLTableRowElement[];
 
@@ -71,25 +71,25 @@ export namespace Table {
 
       data?.forEach((item, idx) => {
         this.warning.forEach(i => {
-          if ((idx + 1) === i.row) {
+          if (idx + 1 === i.row) {
             const cell = item.querySelectorAll('td[role="cell"');
             cell.forEach((c, id) => {
-              if ((id + 1) === i.col) {
+              if (id + 1 === i.col) {
                 c.classList.add("warning");
-                c.insertAdjacentHTML('beforeend', '<md-icon name="warning_24" color="yellow"></md-icon>');
+                c.insertAdjacentHTML("beforeend", '<md-icon name="warning_24" color="yellow"></md-icon>');
               }
-            })
+            });
           }
         });
         this.errors.forEach(i => {
-          if ((idx + 1) === i.row) {
+          if (idx + 1 === i.row) {
             const cell = item.querySelectorAll('td[role="cell"');
             cell.forEach((c, id) => {
-              if ((id + 1) === i.col) {
+              if (id + 1 === i.col) {
                 c.classList.add("error");
-                c.insertAdjacentHTML('beforeend', '<md-icon name="error_24" color="red"></md-icon>');
+                c.insertAdjacentHTML("beforeend", '<md-icon name="error_24" color="red"></md-icon>');
               }
-            })
+            });
           }
         });
       });
@@ -156,7 +156,7 @@ export namespace Table {
 
     render() {
       return html`
-        <div class=${`md-table-container ` + `${this.stickheader ? "md-table-container_stickly" : nothing}`}>
+        <div class=${`md-table-container ` + `${this.stickheader ? "md-table-container_stickly" : ""}`}>
           ${this.csvData.length != 0
             ? html`
                 <table

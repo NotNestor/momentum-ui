@@ -10,9 +10,9 @@ import "@/components/badge/Badge";
 import "@/components/icon/Icon";
 import { customElementWithCheck } from "@/mixins/CustomElementCheck";
 import reset from "@/wc_scss/reset.scss";
-import { html, LitElement, property } from "lit-element";
-import { nothing } from "lit-html";
-import { classMap } from "lit-html/directives/class-map";
+import { html, LitElement, nothing } from "lit";
+import { property } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
 import styles from "./scss/module.scss";
 
 export namespace TaskItem {
@@ -66,11 +66,11 @@ export namespace TaskItem {
             </md-badge>
           `;
         case "progressive_campaign":
-            return html`
-              <md-badge color="green" circle>
-                <md-icon name="icon-icon-campaign_18"></md-icon>
-              </md-badge>
-            `;
+          return html`
+            <md-badge color="green" circle>
+              <md-icon name="icon-icon-campaign_18"></md-icon>
+            </md-badge>
+          `;
         case "chat":
           return html`
             <md-badge color="blue" circle>

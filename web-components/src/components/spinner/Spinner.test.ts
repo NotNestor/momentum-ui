@@ -1,6 +1,6 @@
 import { fixture, fixtureCleanup } from "@open-wc/testing-helpers";
 import "./Spinner";
-import { html } from "lit-element";
+import { html } from "lit";
 import { Spinner } from "./Spinner";
 
 describe("Spinner component", () => {

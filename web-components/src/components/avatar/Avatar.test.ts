@@ -1,7 +1,7 @@
 import "./Avatar";
 import { Avatar } from "./Avatar";
 import { elementUpdated, fixture, fixtureCleanup } from "@open-wc/testing-helpers";
-import { html } from "lit-element";
+import { html } from "lit";
 
 describe("Avatar", () => {
   afterEach(fixtureCleanup);

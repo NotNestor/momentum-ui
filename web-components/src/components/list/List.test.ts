@@ -4,7 +4,7 @@ import "./ListItem";
 import { ListItem } from "./ListItem";
 import { Key } from "@/constants";
 import { defineCE, elementUpdated, fixture, fixtureCleanup, fixtureSync, oneEvent } from "@open-wc/testing-helpers";
-import { html, LitElement, PropertyValues } from "lit-element";
+import { html, LitElement, PropertyValues } from "lit";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyConstructor<A = LitElement> = new (...args: any[]) => A;

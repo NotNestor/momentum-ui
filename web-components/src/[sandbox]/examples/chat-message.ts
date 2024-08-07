@@ -1,5 +1,5 @@
 import "@/components/chat-message/ChatMessage";
-import { html } from "lit-element";
+import { html } from "lit";
 import "@/components/alert/Alert";
 import "@/components/badge/Badge";
 import "@/components/icon/Icon";

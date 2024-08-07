@@ -6,11 +6,12 @@
  *
  */
 
-import reset from "@/wc_scss/reset.scss";
 import { customElementWithCheck } from "@/mixins/CustomElementCheck";
-import { html, LitElement, property, PropertyValues } from "lit-element";
-import { classMap } from "lit-html/directives/class-map";
-import { ifDefined } from "lit-html/directives/if-defined";
+import reset from "@/wc_scss/reset.scss";
+import { html, LitElement, PropertyValues } from "lit";
+import { property } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
+import { ifDefined } from "lit/directives/if-defined.js";
 import styles from "./scss/module.scss";
 
 export namespace MenuItem {
@@ -99,7 +100,6 @@ export namespace MenuItem {
           composed: true
         })
       );
-
     }
 
     handleKeyDown(event: KeyboardEvent) {
@@ -133,17 +133,17 @@ export namespace MenuItem {
     }
 
     render() {
-      
       return html`
         <li
           role="menuitem"
           part="menu-item"
-          class="md-menu-item ${classMap(this.menuItemClassMap)}" 
+          class="md-menu-item ${classMap(this.menuItemClassMap)}"
           ?disabled=${this.disabled}
-          tabindex="-1" 
+          tabindex="-1"
           aria-hidden="true"
           aria-selected="false"
-          aria-label=${ifDefined(this.label)}>
+          aria-label=${ifDefined(this.label)}
+        >
           <a href="${ifDefined(this.href || undefined)}">
             <slot></slot>
           </a>

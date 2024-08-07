@@ -6,15 +6,15 @@
  *
  */
 
-import { Key } from "@/constants";
-import reset from "@/wc_scss/reset.scss";
-import { customElementWithCheck } from "@/mixins/CustomElementCheck";
-import { html, internalProperty, LitElement, property, PropertyValues } from "lit-element";
-import { nothing } from "lit-html";
-import { classMap } from "lit-html/directives/class-map";
 import "@/components/icon/Icon";
 import "@/components/progress-bar/ProgressBar";
 import "@/components/tooltip/Tooltip";
+import { Key } from "@/constants";
+import { customElementWithCheck } from "@/mixins/CustomElementCheck";
+import reset from "@/wc_scss/reset.scss";
+import { html, LitElement, nothing, PropertyValues } from "lit";
+import { property, state } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
 import styles from "./scss/module.scss";
 
 export const tooltipPlacement = [
@@ -66,13 +66,13 @@ export namespace Chip {
     })
     value = "";
 
-    @internalProperty({
+    @state({
       hasChanged(newVal, oldVal) {
         return newVal !== oldVal;
       }
     })
     private textOverflow = false;
-    @internalProperty()
+    @state()
     private renderedText = "";
 
     connectedCallback() {

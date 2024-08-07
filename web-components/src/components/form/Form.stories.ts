@@ -8,15 +8,15 @@
 
 import "@/components/form/Form";
 import { ThemeNameValues } from "@/components/theme/Theme";
-import { withA11y } from "@storybook/addon-a11y";
+
 import { action } from "@storybook/addon-actions";
 import { boolean, select, text, withKnobs } from "@storybook/addon-knobs";
-import { html } from "lit-element";
+import { html } from "lit";
 
 export default {
   title: "Components/Form",
   component: "md-form",
-  decorators: [withKnobs, withA11y],
+  decorators: [withKnobs],
   parameters: {
     a11y: {
       element: "md-form"

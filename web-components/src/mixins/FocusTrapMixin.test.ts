@@ -10,7 +10,8 @@ import {
   nextFrame,
   oneEvent
 } from "@open-wc/testing-helpers";
-import { LitElement, PropertyValues, customElement, html, property, query } from "lit-element";
+import { LitElement, PropertyValues, html } from "lit";
+import { customElement, property, query } from "lit/decorators.js";
 import { AnyConstructor, FocusTrapMixin } from "./FocusTrapMixin";
 
 Object.defineProperties(Element.prototype, {
@@ -122,26 +123,27 @@ describe("FocusTrap Mixin", () => {
     await elementUpdated(el);
 
     expect(focusTrap!["focusTrapIndex"]).toEqual(5);
-
   });
 
   test("should decrease trap index when input-clear event is dispatched", async () => {
     const focusTrap = el.shadowRoot!.querySelector<FocusTrap>("focus-trap");
     const focusableChild = focusTrap!.querySelector<FocusableChild>("focusable-child");
     const input = focusableChild!.shadowRoot!.querySelector("input");
-  
+
     focusTrap!["activateFocusTrap"]!();
     focusTrap!["setFocusableElements"]!();
     await nextFrame();
     await elementUpdated(el);
     focusTrap!["focusTrapIndex"] = 5;
-    input!.dispatchEvent(new CustomEvent("input-clear", {
-      bubbles: true,
-      composed: true,
-      detail: {
-        srcEvent: new KeyboardEvent("keydown", { code: "Enter" })
-      }
-    }));
+    input!.dispatchEvent(
+      new CustomEvent("input-clear", {
+        bubbles: true,
+        composed: true,
+        detail: {
+          srcEvent: new KeyboardEvent("keydown", { code: "Enter" })
+        }
+      })
+    );
     await nextFrame();
     await elementUpdated(el);
     expect(focusTrap!["focusTrapIndex"]).toEqual(4);
@@ -151,7 +153,6 @@ describe("FocusTrap Mixin", () => {
     const focusTrap = el.shadowRoot!.querySelector<FocusTrap>("focus-trap");
     const focusableChild = focusTrap!.querySelector<FocusableChild>("focusable-child");
     const mdInput = focusableChild!.shadowRoot!.querySelector("md-input");
-
 
     focusTrap!["activateFocusTrap"]!();
     focusTrap!["setFocusableElements"]!();
@@ -166,11 +167,9 @@ describe("FocusTrap Mixin", () => {
     expect(focusTrap!["focusTrapIndex"]).toEqual(6);
   });
 
-
   test("should set trap index of button inside div", async () => {
     const focusTrap = el.shadowRoot!.querySelector<FocusTrap>("focus-trap");
     const focusableChild = focusTrap!.querySelectorAll<FocusableChild>("div")[1];
-
 
     focusTrap!["activateFocusTrap"]!();
     focusTrap!["setFocusableElements"]!();
@@ -184,7 +183,6 @@ describe("FocusTrap Mixin", () => {
 
     expect(focusTrap!["focusTrapIndex"]).toEqual(4);
   });
-
 
   test("should transfer focus-trap to child when child traps focus", async () => {
     const parentFocusTrap = await fixture<FocusTrap>(

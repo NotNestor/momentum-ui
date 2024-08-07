@@ -16,9 +16,10 @@ import "@/components/tabs/Tabs";
 import "@/components/toggle-switch/ToggleSwitch";
 import "@/components/tooltip/Tooltip";
 import svgWxm from "@img/wxm.svg";
-import { css, customElement, html, internalProperty, LitElement } from "lit-element";
-import { repeat } from "lit-html/directives/repeat";
-import { unsafeHTML } from "lit-html/directives/unsafe-html";
+import { css, html, LitElement } from "lit";
+import { customElement, state } from "lit/decorators.js";
+import { repeat } from "lit/directives/repeat.js";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { nanoid } from "nanoid";
 
 const tabsOverlayHtmlList = ["All templates", "Only Fb Template", ...Array(20)].map(
@@ -159,11 +160,11 @@ export class TabsOrderPrefsExample extends LitElement {
 
 @customElement("default-tabs-sandbox")
 export class TabsTemplateSandbox extends LitElement {
-  @internalProperty() private tabs: any = {};
-  @internalProperty() private isModalOpen = false;
+  @state() private tabs: any = {};
+  @state() private isModalOpen = false;
   defaultTabsOrder = ["WxM", "History", "Answer", "Admins", "Widgets", "News", "Weather", "Turbo"];
-  @internalProperty() private currentTabsOrder = this.defaultTabsOrder;
-  @internalProperty() private isSingleButtonResetEnabled = false;
+  @state() private currentTabsOrder = this.defaultTabsOrder;
+  @state() private isSingleButtonResetEnabled = false;
   closeTabName = "";
 
   private setUpTabs() {
