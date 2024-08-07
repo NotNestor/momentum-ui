@@ -13,6 +13,7 @@ import { FocusMixin } from "@/mixins";
 import { customElementWithCheck } from "@/mixins/CustomElementCheck";
 import { debounce, findHighlight } from "@/utils/helpers";
 import reset from "@/wc_scss/reset.scss";
+import { virtualize } from "@lit-labs/virtualizer/virtualize.js";
 import { LitElement, PropertyValues, html, nothing } from "lit";
 import { property, query, queryAll, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
@@ -1662,17 +1663,16 @@ export namespace ComboBox {
                       this.filterOptions(this.trimSpace ? this.inputValue.replace(/\s+/g, "") : this.inputValue)
                         .length > 0
                     ? html`
-                        <lit-virtualizer
-                          @rangeChanged=${this.rangeChanged}
-                          class="virtual-scroll"
-                          scroller
-                          .items=${this.filterOptions(
-                            this.trimSpace ? this.inputValue.replace(/\s+/g, "") : this.inputValue
-                          )}
-                          .renderItem=${(option: string | OptionMember, index: number) =>
-                            this.renderItem(option, index)}
-                        >
-                        </lit-virtualizer>
+                        <div class="virtual-scroll" @rangeChanged=${this.rangeChanged}>
+                          ${virtualize({
+                            scroller: true,
+                            items: this.filterOptions(
+                              this.trimSpace ? this.inputValue.replace(/\s+/g, "") : this.inputValue
+                            ),
+                            renderItem: (item: string | OptionMember, index?: number) =>
+                              this.renderItem(item, index || 0)
+                          })}
+                        </div>
                       `
                     : nothing}
                   ${this.options.length &&
