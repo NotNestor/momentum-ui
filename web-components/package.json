@@ -87,7 +87,6 @@
     "@storybook/addon-knobs": "^8.0.1",
     "@storybook/addon-webpack5-compiler-babel": "^3.0.3",
     "@storybook/addons": "7.6.20",
-    "@storybook/client-api": "7.6.20",
     "@storybook/core": "^8.2.8",
     "@storybook/core-common": "^8.2.8",
     "@storybook/storybook-deployer": "^2.8.16",
