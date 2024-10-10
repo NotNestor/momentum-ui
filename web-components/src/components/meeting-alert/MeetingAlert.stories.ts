@@ -60,6 +60,9 @@ export default {
 
 export const MeetingAlert: StoryObj = {
   args: {
+    show: true,
+    status: "Webex Teams Status",
+    title: "Webex Teams Title",
     src: "https://st2.depositphotos.com/4967775/11323/v/950/depositphotos_113235752-stock-illustration-avatar-girls-icon-vector-woman.jpg"
   },
   render: (args: Args) => {
@@ -98,9 +101,7 @@ export const MeetingAlert: StoryObj = {
 
 export const MeetingAlertActionThroughSlot: StoryObj = {
   args: {
-    show: true,
-    status: "Webex Teams Status",
-    title: "Webex Teams Title"
+    ...MeetingAlert.args
   },
   render: (args: Args) => {
     return html`
@@ -126,10 +127,7 @@ export const MeetingAlertActionThroughSlot: StoryObj = {
 
 export const MeetingAlertImageThroughSlot: StoryObj = {
   args: {
-    show: true,
-    src: "https://st2.depositphotos.com/4967775/11323/v/950/depositphotos_113235752-stock-illustration-avatar-girls-icon-vector-woman.jpg",
-    status: "Webex Teams Status",
-    title: "Webex Teams Title"
+    ...MeetingAlert.args
   },
   render: (args: Args) => {
     return html`
@@ -150,8 +148,7 @@ export const MeetingAlertImageThroughSlot: StoryObj = {
 
 export const MeetingAlertSrcThroughSlot: StoryObj = {
   args: {
-    show: true,
-    src: "https://st2.depositphotos.com/4967775/11323/v/950/depositphotos_113235752-stock-illustration-avatar-girls-icon-vector-woman.jpg"
+    ...MeetingAlert.args
   },
   render: (args: Args) => {
     return html`
@@ -166,6 +163,9 @@ export const MeetingAlertSrcThroughSlot: StoryObj = {
 };
 
 export const MeetingAlertThroughSrc: StoryObj = {
+  args: {
+    ...MeetingAlert.args
+  },
   render: (args: Args) => {
     return html`
       <h3>md-meeting-alert image through src</h3>

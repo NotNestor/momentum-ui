@@ -29,7 +29,6 @@ const preview = {
         disable: true
       }
     },
-    actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       disableSaveFromUI: true,
       expanded: true,

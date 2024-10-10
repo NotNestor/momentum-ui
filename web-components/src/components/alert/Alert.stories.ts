@@ -86,7 +86,7 @@ const meta: Meta = {
     hasFooterSlotContent: { table: { disable: true } },
     slottedFooterClassMap: { table: { disable: true } },
     internalClose: { description: "By default closing internally, otherwise - controlling outer via .show" },
-    type: { control: { type: "select", options: alertTypes } }
+    type: { control: { type: "select" }, options: alertTypes }
   },
   parameters: {
     a11y: {

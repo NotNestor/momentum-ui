@@ -9,7 +9,7 @@
 import "@/components/input/Input";
 import "@/components/label/Label";
 import { action } from "@storybook/addon-actions";
-import { Args } from "@storybook/web-components";
+import { Args, StoryObj } from "@storybook/web-components";
 import { html } from "lit";
 
 export default {
@@ -22,9 +22,7 @@ export default {
     active: { table: { disable: true } },
     indeterminate: { table: { disable: true } },
     labelClassMap: { table: { disable: true } },
-    label: { control: "text", defaultValue: "Label" },
-    withInput: { control: "boolean", defaultValue: false },
-    secondaryLabel: { control: "text", defaultValue: "" }
+    withInput: { control: { type: "boolean" } }
   },
   parameters: {
     a11y: {
@@ -33,18 +31,25 @@ export default {
   }
 };
 
-export const Label = (args: Args) => {
-  if (args.withInput) {
-    return html`
-      <md-input
-        @label-click=${action("click")}
-        .label=${args.label}
-        placeholder="placeholder text"
-        .secondaryLabel=${args.secondaryLabel}
-      >
-      </md-input>
-    `;
-  } else {
-    return html` <md-label htmlFor="#">${args.label}</md-label> `;
+export const Label: StoryObj = {
+  args: {
+    label: "Label",
+    withInput: false,
+    secondaryLabel: false
+  },
+  render: (args: Args)  => {
+    if (args.withInput) {
+      return html`
+        <md-input
+          @label-click=${action("click")}
+          .label=${args.label}
+          placeholder="placeholder text"
+          .secondaryLabel=${args.secondaryLabel}
+        >
+        </md-input>
+      `;
+    } else {
+      return html` <md-label htmlFor="#">${args.label}</md-label> `;
+    }
   }
 };

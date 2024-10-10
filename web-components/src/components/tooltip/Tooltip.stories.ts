@@ -40,7 +40,10 @@ const meta: Meta = {
   argTypes: {
     reference: { table: { disable: true } },
     popper: { table: { disable: true } },
-    placement: { control: { type: "select", options: tooltipPlacement } }
+    placement: { 
+      control: { type: "select" },
+      options: tooltipPlacement 
+    } 
   },
   parameters: {
     a11y: {

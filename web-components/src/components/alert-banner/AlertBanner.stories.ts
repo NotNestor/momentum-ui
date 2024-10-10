@@ -36,7 +36,7 @@ const meta: Meta = {
   title: "Components/Alert Banner",
   component: "md-alert-banner",
   argTypes: {
-    type: { control: { type: "select", options: ["default", "warning", "error", "success"] } }
+    type: { control: { type: "select" }, options: ["default", "warning", "error", "success"] } 
   },
   parameters: {
     a11y: {
