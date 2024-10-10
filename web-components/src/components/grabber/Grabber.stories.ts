@@ -11,7 +11,7 @@ import "@/components/theme/Theme";
 import { ThemeNameValues } from "@/components/theme/Theme";
 import { action } from "@storybook/addon-actions";
 import type { Args, Meta, StoryObj } from "@storybook/web-components";
-import { html } from "lit-element";
+import { html } from "lit";
 
 const render = (args: Args) => html`
   <md-theme class="theme-toggle" ?darkTheme=${args.darkTheme} theme=${args.theme}>

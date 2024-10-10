@@ -11,7 +11,7 @@ import { CardAiVariant } from "@/components/card-ai/CardAi";
 import { ThemeNameValues } from "@/components/theme/Theme";
 import { action } from "@storybook/addon-actions";
 import { Args } from "@storybook/web-components";
-import { html } from "lit-element";
+import { html } from "lit";
 
 export default {
   title: "Components/Card Ai",

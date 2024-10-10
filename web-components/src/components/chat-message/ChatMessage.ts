@@ -1,9 +1,10 @@
-import reset from "@/wc_scss/reset.scss";
-import { customElementWithCheck } from "@/mixins/CustomElementCheck";
-import { html, LitElement, property } from "lit-element";
-import styles from "./scss/module.scss";
 import "@/components/avatar/Avatar";
-import { ifDefined } from "lit-html/directives/if-defined";
+import { customElementWithCheck } from "@/mixins/CustomElementCheck";
+import reset from "@/wc_scss/reset.scss";
+import { html, LitElement } from "lit";
+import { property } from "lit/decorators.js";
+import { ifDefined } from "lit/directives/if-defined.js";
+import styles from "./scss/module.scss";
 
 export namespace ChatMessage {
   @customElementWithCheck("md-chat-message")

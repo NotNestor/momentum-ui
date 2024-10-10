@@ -26,7 +26,7 @@ module.exports = {
     "@storybook/addon-actions"
   ],
 
-  framework: "@storybook/web-components",
+  framework: "@storybook/web-components-webpack5",
 
   webpackFinal: async (
     storybookConfig: webpack.Configuration,
@@ -36,6 +36,7 @@ module.exports = {
 
     // RESOLVE
     storybookConfig.resolve = storybookConfig.resolve ?? {};    
+    storybookConfig.resolve.fallback = commonDev.resolve?.fallback;
 
     // EXTENSIONS
     storybookConfig.resolve.extensions = mergeUnique(

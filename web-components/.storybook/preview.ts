@@ -1,4 +1,3 @@
-import { Parameters } from "@storybook/client-api";
 import { setCustomElements } from "@storybook/web-components";
 import customElements from './custom-elements.json';
 
@@ -9,7 +8,7 @@ import customElements from './custom-elements.json';
 
 setCustomElements(customElements);
 
-export const parameters:Parameters = {
+export const preview = {
   docs: {
     inlineStories: false,
   },

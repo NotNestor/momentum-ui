@@ -12,12 +12,13 @@ import "@/components/loading/Loading";
 import { customElementWithCheck } from "@/mixins/CustomElementCheck";
 import { isActionKey } from "@/utils/keyboard";
 import reset from "@/wc_scss/reset.scss";
-import { html, internalProperty, LitElement, property, PropertyValues } from "lit-element";
-import { nothing } from "lit-html";
-import { classMap } from "lit-html/directives/class-map";
-import { ifDefined } from "lit-html/directives/if-defined";
-import { styleMap } from "lit-html/directives/style-map";
-import { until } from "lit-html/directives/until.js";
+import { html, LitElement, PropertyValues } from "lit";
+import { property, state } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
+import { ifDefined } from "lit/directives/if-defined.js";
+import { styleMap } from "lit/directives/style-map.js";
+import { until } from "lit/directives/until.js";
+import { nothing } from "lit/html.js";
 import { AvatarSize, AvatarType } from "./Avatar.constants";
 import { getPresenceIconColor } from "./Presence.utils";
 import styles from "./scss/module.scss";
@@ -56,11 +57,11 @@ export namespace Avatar {
     @property({ type: Boolean }) clickable = false;
     @property({ attribute: false }) clickFunction?: () => void;
 
-    @internalProperty() private imageLoaded = false;
-    @internalProperty() private imageErrored = false;
-    @internalProperty() private presenceColor = "";
-    @internalProperty() private presenceIcon = "";
-    @internalProperty() private isCircularWrapper = false;
+    @state() private imageLoaded = false;
+    @state() private imageErrored = false;
+    @state() private presenceColor = "";
+    @state() private presenceIcon = "";
+    @state() private isCircularWrapper = false;
 
     static get styles() {
       return [reset, styles];

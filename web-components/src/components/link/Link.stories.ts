@@ -11,7 +11,7 @@
 import "@/components/link/Link";
 import { ThemeNameValues } from "@/components/theme/Theme";
 import type { Args, Meta, StoryObj } from "@storybook/web-components";
-import { html } from "lit-element";
+import { html } from "lit";
 import { linkColor, linkRole, linkTag } from "./Link"; // Keep type import as a relative path
 
 const render = (args: Args) => html`

@@ -10,7 +10,7 @@ import "@/components/button-group/ButtonGroup";
 import "@/components/icon/Icon";
 import { ThemeNameValues } from "@/components/theme/Theme";
 import { Args, Meta, StoryObj } from "@storybook/web-components";
-import { html } from "lit-element";
+import { html } from "lit";
 
 const render = (args: Args) => html`
   <md-theme class="theme-toggle" ?darkTheme=${args.darkTheme} theme=${args.theme}>

@@ -11,7 +11,7 @@ import "@/components/list/ListItem";
 import { ThemeNameValues } from "@/components/theme/Theme";
 import { action } from "@storybook/addon-actions";
 import { Args } from "@storybook/web-components";
-import { html } from "lit-element";
+import { html } from "lit";
 
 const options = {
   Vertical: "vertical",

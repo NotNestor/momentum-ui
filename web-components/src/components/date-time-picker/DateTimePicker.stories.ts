@@ -3,7 +3,7 @@ import { ThemeNameValues } from "@/components/theme/Theme";
 import { TIME_UNIT } from "@/constants";
 import { now } from "@/utils/dateUtils";
 import { Args } from "@storybook/web-components";
-import { html } from "lit-element";
+import { html } from "lit";
 import { DatePicker } from "../datepicker/DatePicker"; // Keep type import as a relative path
 import { timeSpecificity } from "../timepicker/TimePicker"; // Keep type import as a relative path
 

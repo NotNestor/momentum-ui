@@ -1,7 +1,7 @@
 import { ThemeNameValues } from "@/components/theme/Theme";
 import type { Args, Meta, StoryObj } from "@storybook/web-components";
 
-import { html } from "lit-element";
+import { html } from "lit";
 import "./Accordion";
 import mdx from "./Accordion.mdx";
 import "./AccordionItem";

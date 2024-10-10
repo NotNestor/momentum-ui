@@ -15,9 +15,10 @@ import "@/components/menu-overlay/MenuOverlay";
 import "@/components/tooltip/Tooltip";
 import { customElementWithCheck } from "@/mixins/CustomElementCheck";
 import reset from "@/wc_scss/reset.scss";
-import { html, LitElement, property } from "lit-element";
-import { nothing } from "lit-html";
-import { repeat } from "lit-html/directives/repeat";
+import { html, LitElement } from "lit";
+import { property } from "lit/decorators.js";
+import { repeat } from "lit/directives/repeat.js";
+import { nothing } from "lit/html.js";
 import { Key } from "../../constants"; // Keep type import as a relative path
 import styles from "./scss/module.scss";
 

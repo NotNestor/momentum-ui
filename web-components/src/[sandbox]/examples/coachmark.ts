@@ -1,10 +1,11 @@
-import "@/components/button/Button";
-import "@/components/icon/Icon";
-import "@/components/coachmark/Coachmark";
 import "@/components/activity-button/ActivityButton";
 import "@/components/badge/Badge";
+import "@/components/button/Button";
+import "@/components/coachmark/Coachmark";
+import "@/components/icon/Icon";
 import "@/components/taskitem/TaskItem";
-import { customElement, html, LitElement, property } from "lit-element";
+import { html, LitElement } from "lit";
+import { customElement, property } from "lit/decorators.js";
 
 @customElement("coach-template-sandbox")
 export class CoachTemplateSandbox extends LitElement {

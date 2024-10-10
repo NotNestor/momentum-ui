@@ -3,7 +3,8 @@ import "@/components/sass-stats/SassStats";
 import "@/components/theme/Theme";
 import { ThemeName } from "@/components/theme/Theme";
 import reset from "@/wc_scss/reset.scss";
-import { customElement, html, LitElement, property, PropertyValues } from "lit-element";
+import { html, LitElement, PropertyValues } from "lit";
+import { customElement, property } from "lit/decorators.js";
 import {
   accordionTemplate,
   alertBannerTemplate,

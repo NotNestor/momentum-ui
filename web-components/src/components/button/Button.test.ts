@@ -1,6 +1,6 @@
 import { Key } from "@/constants";
 import { fixture, fixtureCleanup, html, oneEvent } from "@open-wc/testing-helpers";
-import { nothing } from "lit-html";
+import { nothing } from "lit/html.js";
 import "./Button";
 import { Button } from "./Button";
 

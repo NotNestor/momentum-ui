@@ -1,6 +1,7 @@
 import "@/components/grabber/Grabber";
 import { Grabber } from "@/components/grabber/Grabber";
-import { customElement, html, LitElement, PropertyValues, query } from "lit-element";
+import { html, LitElement, PropertyValues } from "lit";
+import { customElement, query } from "lit/decorators.js";
 
 @customElement("grabber-template-sandbox")
 export class GrabberTemplateSandbox extends LitElement {

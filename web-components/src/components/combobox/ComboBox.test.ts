@@ -2,7 +2,7 @@ import { comboBoxComplexObjectOption, comboBoxObjectOptions, comboBoxOptions } f
 import "@/components/icon/Icon";
 import { Key } from "@/constants";
 import { elementUpdated, fixture, fixtureCleanup, html, nextFrame, oneEvent } from "@open-wc/testing-helpers";
-import { repeat } from "lit-html/directives/repeat";
+import { repeat } from "lit/directives/repeat.js";
 import "./ComboBox";
 import { ComboBox } from "./ComboBox";
 

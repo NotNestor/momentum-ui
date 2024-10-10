@@ -2,7 +2,7 @@ import "@/components/date-range-picker/DateRangePicker";
 import { ThemeNameValues } from "@/components/theme/Theme";
 import { now } from "@/utils/dateUtils";
 import { Args } from "@storybook/web-components";
-import { html } from "lit-element";
+import { html } from "lit";
 import { DatePicker as DP } from "../datepicker/DatePicker"; // Keep type import as a relative path
 import "../theme/Theme";
 

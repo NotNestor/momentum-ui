@@ -12,8 +12,9 @@ import "@/components/icon/Icon";
 import { Key } from "@/constants";
 import { customElementWithCheck } from "@/mixins/CustomElementCheck";
 import reset from "@/wc_scss/reset.scss";
-import { html, LitElement, property, TemplateResult } from "lit-element";
-import { nothing } from "lit-html";
+import { html, LitElement, TemplateResult } from "lit";
+import { property } from "lit/decorators.js";
+import { nothing } from "lit/html.js";
 import { templateHTML } from "./CompositeAvatar"; // Keep type import as a relative path
 import styles from "./scss/module.scss";
 

@@ -6,11 +6,12 @@
  *
  */
 
-import reset from "@/wc_scss/reset.scss";
-import { styleMap } from "lit-html/directives/style-map";
-import { html, LitElement, property } from "lit-element";
-import styles from "./scss/module.scss";
 import { customElementWithCheck } from "@/mixins/CustomElementCheck";
+import reset from "@/wc_scss/reset.scss";
+import { html, LitElement } from "lit";
+import { property } from "lit/decorators.js";
+import { styleMap } from "lit/directives/style-map.js";
+import styles from "./scss/module.scss";
 
 export namespace Spinner {
   @customElementWithCheck("md-spinner")

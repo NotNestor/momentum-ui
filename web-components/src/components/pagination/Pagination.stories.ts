@@ -1,6 +1,6 @@
 import { ThemeNameValues } from "@/components/theme/Theme";
 import { Args } from "@storybook/web-components";
-import { html } from "lit-element";
+import { html } from "lit";
 import "./Pagination";
 
 export default {

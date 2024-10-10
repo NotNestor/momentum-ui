@@ -9,7 +9,7 @@
 import "@/components/audio-player/AudioPlayer";
 import { ThemeNameValues } from "@/components/theme/Theme";
 import type { Args, Meta, StoryObj } from "@storybook/web-components";
-import { html } from "lit-element";
+import { html } from "lit";
 
 const render = (args: Args) => html`
   <md-theme class="theme-toggle" id="audio" ?darkTheme=${args.darkTheme} theme=${args.theme}>

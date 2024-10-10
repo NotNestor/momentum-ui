@@ -22,7 +22,8 @@ import {
   subtractMonths
 } from "@/utils/dateUtils";
 import reset from "@/wc_scss/reset.scss";
-import { LitElement, PropertyValues, TemplateResult, html, internalProperty, property } from "lit-element";
+import { LitElement, PropertyValues, TemplateResult, html } from "lit";
+import { property, state } from "lit/decorators.js";
 import { DateTime } from "luxon";
 import { DatePickerProps, DayFilters } from "../../../utils/dateUtils"; // Keep type import as a relative path
 import styles from "../scss/module.scss";
@@ -36,8 +37,8 @@ export namespace DatePickerCalendar {
     @property({ attribute: false }) handleMonthChange: Function | undefined = undefined;
     @property({ attribute: false }) datePickerProps: DatePickerProps | undefined = undefined;
 
-    @internalProperty() viewAnchorDate: DateTime = now();
-    @internalProperty() localeMonth: string | undefined = undefined;
+    @state() viewAnchorDate: DateTime = now();
+    @state() localeMonth: string | undefined = undefined;
 
     connectedCallback() {
       super.connectedCallback();

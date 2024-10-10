@@ -9,7 +9,7 @@
 import "@/components/chat-message/ChatMessage";
 import { ThemeNameValues } from "@/components/theme/Theme";
 import { Args } from "@storybook/web-components";
-import { html } from "lit-element";
+import { html } from "lit";
 
 export default {
   title: "Components/Chat Message",

@@ -2,7 +2,8 @@ import "@/components/button/Button";
 import "@/components/icon/Icon";
 import "@/components/spinner/Spinner";
 import "@/components/tooltip/Tooltip";
-import { css, customElement, html, LitElement } from "lit-element";
+import { css, html, LitElement } from "lit";
+import { customElement } from "lit/decorators.js";
 
 @customElement("button-template-sandbox")
 export class ButtonTemplateSandbox extends LitElement {

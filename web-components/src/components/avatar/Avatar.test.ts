@@ -1,6 +1,6 @@
 import { Key } from "@/constants";
 import { elementUpdated, fixture, fixtureCleanup, oneEvent } from "@open-wc/testing-helpers";
-import { html } from "lit-element";
+import { html } from "lit";
 import "./Avatar";
 import { Avatar } from "./Avatar";
 

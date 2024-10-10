@@ -12,9 +12,10 @@ import "@/components/icon/Icon";
 import "@/components/link/Link";
 import { customElementWithCheck } from "@/mixins/CustomElementCheck";
 import reset from "@/wc_scss/reset.scss";
-import { html, LitElement, property, TemplateResult } from "lit-element";
-import { nothing } from "lit-html";
-import { classMap } from "lit-html/directives/class-map";
+import { html, LitElement, TemplateResult } from "lit";
+import { property } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
+import { nothing } from "lit/html.js";
 import styles from "./scss/module.scss";
 
 export namespace Alert {

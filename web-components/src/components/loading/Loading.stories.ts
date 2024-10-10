@@ -9,7 +9,7 @@
 import "@/components/loading/Loading";
 import { ThemeNameValues } from "@/components/theme/Theme";
 import { Args, StoryObj } from "@storybook/web-components";
-import { html } from "lit-element";
+import { html } from "lit";
 
 const options = {
   Small: "small",

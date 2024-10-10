@@ -1,7 +1,7 @@
 import "@/components/phone-input/PhoneInput";
 import { ThemeNameValues } from "@/components/theme/Theme";
 import { Args } from "@storybook/web-components";
-import { html } from "lit-element";
+import { html } from "lit";
 import "../theme/Theme";
 
 export default {

@@ -6,10 +6,11 @@ import { customElementWithCheck } from "@/mixins/CustomElementCheck";
 import { now } from "@/utils/dateUtils";
 import { ValidationRegex } from "@/utils/validations";
 import reset from "@/wc_scss/reset.scss";
-import { LitElement, PropertyValues, html, internalProperty, property } from "lit-element";
-import { nothing } from "lit-html";
-import { classMap } from "lit-html/directives/class-map";
-import { ifDefined } from "lit-html/directives/if-defined";
+import { LitElement, PropertyValues, html } from "lit";
+import { property, state } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
+import { ifDefined } from "lit/directives/if-defined.js";
+import { nothing } from "lit/html.js";
 import { DateTime } from "luxon";
 import { TIME_UNIT } from "../../constants";
 import styles from "./scss/module.scss";
@@ -62,18 +63,18 @@ export namespace TimePicker {
     @property({ type: String }) locale = "en-US";
     @property({ type: String, reflect: true }) value = "00:00:00-08:00"; // ISO FORMAT
 
-    @internalProperty() private localeTwentyFourFormat = false;
-    @internalProperty() private finalTwentyFourFormat = false;
-    @internalProperty() private timeObject: DateTime = now();
-    @internalProperty() private tabNext = false;
-    @internalProperty() private timeValue = {
+    @state() private localeTwentyFourFormat = false;
+    @state() private finalTwentyFourFormat = false;
+    @state() private timeObject: DateTime = now();
+    @state() private tabNext = false;
+    @state() private timeValue = {
       [TIME_UNIT.HOUR]: "12",
       [TIME_UNIT.MINUTE]: "00",
       [TIME_UNIT.SECOND]: "00",
       [TIME_UNIT.AM_PM]: "AM"
     };
 
-    @internalProperty() private timeValidity = {
+    @state() private timeValidity = {
       [TIME_UNIT.HOUR]: true,
       [TIME_UNIT.MINUTE]: true,
       [TIME_UNIT.SECOND]: true,

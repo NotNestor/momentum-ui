@@ -1,5 +1,5 @@
 import { Args } from "@storybook/web-components";
-import { html } from "lit-element";
+import { html } from "lit";
 import "./CodeEditor";
 
 export default {

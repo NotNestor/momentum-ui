@@ -10,7 +10,7 @@ import "@/components/checkbox/Checkbox";
 import "@/components/checkbox/CheckboxGroup";
 import { ThemeNameValues } from "@/components/theme/Theme";
 import { Args, Meta, StoryObj } from "@storybook/web-components";
-import { html } from "lit-element";
+import { html } from "lit";
 
 const render = (args: Args) => html`
   ${args.group

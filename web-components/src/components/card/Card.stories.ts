@@ -12,8 +12,8 @@ import "@/components/card/Card";
 import { ThemeNameValues } from "@/components/theme/Theme";
 import { action } from "@storybook/addon-actions";
 import { Args } from "@storybook/web-components";
-import { html } from "lit-element";
-import { nothing } from "lit-html";
+import { html } from "lit";
+import { nothing } from "lit/html.js";
 
 export const Card = (args: Args) => {
   return html`

@@ -11,7 +11,7 @@ import { ThemeNameValues } from "@/components/theme/Theme";
 import { alertTypes } from "@/utils/enums";
 import { action } from "@storybook/addon-actions";
 import type { Args, Meta, StoryObj } from "@storybook/web-components";
-import { html } from "lit-html";
+import { html } from "lit/html.js";
 import "../badge/Badge";
 import mdx from "./Alert.mdx";
 

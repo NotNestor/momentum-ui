@@ -18,7 +18,6 @@ const pCss = path.resolve("src/assets/styles");
 const pImg = path.resolve("src/assets/images");
 const p1 = path.resolve("./node_modules/@momentum-ui");
 const p2 = path.resolve("../node_modules/@momentum-ui");
-const node_modules = path.resolve("node_modules");
 
 const pMomentum = fs.existsSync(p1) ? p1 : fs.existsSync(p2) ? p2 : null;
 if (!pMomentum) {
@@ -34,8 +33,7 @@ const common: webpack.Configuration = {
     alias: {
       "@": pSrc,
       "@css": pCss,
-      "@img": pImg,
-      lit: `${node_modules}/lit-element` //Workaround for lit-scss-loader using lit 2.x
+      "@img": pImg
     },
     fallback: {
       timers: require.resolve("timers-browserify")

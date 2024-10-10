@@ -13,13 +13,14 @@ import { FocusMixin } from "@/mixins";
 import { customElementWithCheck } from "@/mixins/CustomElementCheck";
 import { debounce, findHighlight } from "@/utils/helpers";
 import reset from "@/wc_scss/reset.scss";
-import { LitElement, PropertyValues, html, internalProperty, property, query, queryAll } from "lit-element";
-import { nothing } from "lit-html";
-import { classMap } from "lit-html/directives/class-map";
-import { ifDefined } from "lit-html/directives/if-defined";
-import { repeat } from "lit-html/directives/repeat";
-import { styleMap } from "lit-html/directives/style-map";
-import { scroll } from "lit-virtualizer";
+import { virtualize } from "@lit-labs/virtualizer/virtualize.js";
+import { LitElement, PropertyValues, html } from "lit";
+import { property, query, queryAll, state } from "lit/decorators.js";
+import { classMap } from "lit/directives/class-map.js";
+import { ifDefined } from "lit/directives/if-defined.js";
+import { repeat } from "lit/directives/repeat.js";
+import { styleMap } from "lit/directives/style-map.js";
+import { nothing } from "lit/html.js";
 import { setTimeout } from "timers";
 import styles from "./scss/module.scss";
 
@@ -92,7 +93,7 @@ export namespace ComboBox {
 
     @property({ type: String, reflect: true }) ariaLabel = ""; // This aria-label is used by default when there is no search or list-items are displayed.
     @property({ type: String, attribute: "search-result-aria-label" }) searchResultAriaLabel = ""; // This aria-label is dynamic and used when there is search and list-items are displayed.
-    @internalProperty() ariaLabelForComboBox = ""; // This internal property is used to conditionally set aria-label.
+    @state() ariaLabelForComboBox = ""; // This internal property is used to conditionally set aria-label.
 
     @property({ type: String, attribute: "clear-aria-label" }) clearAriaLabel = "Clear";
     @property({ type: String, attribute: "arrow-aria-label" }) arrowAriaLabel = "Expand";
@@ -118,9 +119,9 @@ export namespace ComboBox {
     private readonly messageController = new MessageController();
 
     @property({ type: Number, attribute: false })
-    @internalProperty()
+    @state()
     private isOptGroup = false;
-    @internalProperty()
+    @state()
     private isSelectAllChecked = false;
     get focusedIndex() {
       return this._focusedIndex;
@@ -1768,20 +1769,16 @@ export namespace ComboBox {
                         this.filterOptions(this.trimSpace ? this.inputValue.replace(/\s+/g, "") : this.inputValue)
                           .length > 0
                       ? html`
-                          <div class="virtual-scroll" @rangechange=${this.rangeChanged}>
-                            ${scroll({
-                              items: this.filterOptions(
-                                this.trimSpace ? this.inputValue.replace(/\s+/g, "") : this.inputValue
-                              ),
-                              renderItem: (item: string | OptionMember, index?: number) =>
-                                this.renderItem(item, index || 0),
-                              useShadowDOM: false,
-                              scrollToIndex: {
-                                index: this.focusedIndex,
-                                position: this.focusedIndex === -1 ? "start" : "center"
-                              }
-                            })}
-                          </div>
+                          <div class="virtual-scroll" @rangeChanged=${this.rangeChanged}>
+                          ${virtualize({
+                            scroller: true,
+                            items: this.filterOptions(
+                              this.trimSpace ? this.inputValue.replace(/\s+/g, "") : this.inputValue
+                            ),
+                            renderItem: (item: string | OptionMember, index?: number) =>
+                              this.renderItem(item, index || 0)
+                          })}
+                        </div>
                         `
                       : nothing}
                   ${this.options.length &&

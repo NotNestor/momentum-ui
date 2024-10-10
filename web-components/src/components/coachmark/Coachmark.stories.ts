@@ -3,7 +3,7 @@ import { ThemeNameValues } from "@/components/theme/Theme";
 import { badgeColor, coachPlacement } from "@/utils/enums";
 import { action } from "@storybook/addon-actions";
 import { Args } from "@storybook/web-components";
-import { html } from "lit-element";
+import { html } from "lit";
 
 export default {
   title: "Components/Coachmark",
