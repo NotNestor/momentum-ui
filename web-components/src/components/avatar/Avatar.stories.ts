@@ -8,7 +8,6 @@
 
 import "@/components/avatar/Avatar";
 import "@/components/avatar/CompositeAvatar";
-import { ThemeNameValues } from "@/components/theme/Theme";
 import type { Args, Meta } from "@storybook/web-components";
 import { html } from "lit";
 import { AvatarSize, AvatarType } from "./Avatar.constants";
@@ -36,16 +35,16 @@ const compositeAvatarSize = [0, 18, 24, 28, 36, 40, 44, 52, 56, 72, 80, 84] as c
 export const Avatar = (args: Args) => {
   if (args.composite) {
     return html`
-      <md-theme class="theme-toggle" id="avatar" ?darkTheme=${args.darkTheme} theme=${args.theme}>
+      
         <md-composite-avatar .size=${args.compositeAvatarSizes}>
           <md-avatar title="Anthony Russell" type="dnd" has-notification alt="Avatar"></md-avatar>
           <md-avatar type="typing" title="Alyson Hoagland Pace" alt="Avatar"></md-avatar>
         </md-composite-avatar>
-      </md-theme>
+      
     `;
   } else {
     return html`
-      <md-theme class="theme-toggle" id="avatar" ?darkTheme=${args.darkTheme} theme=${args.theme}>
+      
         <md-avatar
           title=${args.title}
           alt=${args.title}
@@ -60,7 +59,7 @@ export const Avatar = (args: Args) => {
         >
           ${args.customImage ? html` <img width="100" height="100" src=${args.url} /> ` : ``}
         </md-avatar>
-      </md-theme>
+      
     `;
   }
 };
@@ -69,8 +68,6 @@ const meta: Meta = {
   title: "Components/Avatar",
   component: "md-avatar",
   argTypes: {
-    theme: { control: { type: "select", options: ThemeNameValues }, defaultValue: "lumos" },
-    darkTheme: { control: "boolean", defaultValue: false },
     type: { control: { type: "select", options: AvatarType }, defaultValue: "" },
     title: { control: "text", defaultValue: "Rachell Harris" },
     label: { control: "text", defaultValue: "Avatar" },

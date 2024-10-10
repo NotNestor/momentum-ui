@@ -7,7 +7,6 @@
  */
 
 import "@/components/table/Table";
-import { ThemeNameValues } from "@/components/theme/Theme";
 import { Args } from "@storybook/web-components";
 import { html } from "lit-element";
 import { formatType } from "./Table"; // Keep type import as a relative path
@@ -22,8 +21,6 @@ export default {
     results: { table: { disable: true } },
     config: { table: { disable: true } },
     tableClassMap: { table: { disable: true } },
-    theme: { control: { type: "select", options: ThemeNameValues }, defaultValue: "lumos" },
-    darkTheme: { control: "boolean", defaultValue: false },
     tabledata: {
       control: "text",
       defaultValue:
@@ -55,22 +52,20 @@ export default {
 //     - use "\\n" for line break;</br>
 //     - in data property you can see example: </br>
 //      <pre>"id, Product Name, Quantity, Price, Date Purchased \\n 2, Espresso Truffle, 6, 1.75, Sat Aug 22 2020"</pre></br>
-//   </p> 
+//   </p>
 export const Table = (args: Args) => {
   return html`
-    <md-theme class="theme-toggle" id="table" ?darkTheme=${args.darkTheme} theme=${args.theme}>
-      <div style="height: 400px;">
-        <md-table
-          .zebra=${args.zebra}
-          .label="${args.label}"
-          .tabledata="${args.tabledata}"
-          .stickheader="${args.stickheader}"
-          .clean="${args.clean}"
-          .sorting="${args.sorting}"
-          ?no-borders=${args.noBorders}
-          .format=${args.format}
-        ></md-table>
-      </div>
-    </md-theme>
+    <div style="height: 400px;">
+      <md-table
+        .zebra=${args.zebra}
+        .label="${args.label}"
+        .tabledata="${args.tabledata}"
+        .stickheader="${args.stickheader}"
+        .clean="${args.clean}"
+        .sorting="${args.sorting}"
+        ?no-borders=${args.noBorders}
+        .format=${args.format}
+      ></md-table>
+    </div>
   `;
 };

@@ -8,7 +8,6 @@
 
 import "@/components/list/List";
 import "@/components/list/ListItem";
-import { ThemeNameValues } from "@/components/theme/Theme";
 import { action } from "@storybook/addon-actions";
 import { Args } from "@storybook/web-components";
 import { html } from "lit";
@@ -20,7 +19,7 @@ const options = {
 
 export const List = (args: Args) => {
   return html`
-    <md-theme class="theme-toggle" id="list" ?darkTheme=${args.darkTheme} theme=${args.theme}>
+    
       <md-list
         @list-item-change=${action("change")}
         label="Transuranium elements"
@@ -34,7 +33,7 @@ export const List = (args: Args) => {
         <md-list-item shape=${args.shape} slot="list-item">Berkelium</md-list-item>
         <md-list-item shape=${args.shape} slot="list-item">Californium</md-list-item>
       </md-list>
-    </md-theme>
+    
   `;
 };
 
@@ -45,8 +44,6 @@ export default {
     slotElement: { table: { disable: true } },
     listItemSlot: { table: { disable: true } },
     activated: { table: { disable: true } },
-    theme: { control: { type: "select", options: ThemeNameValues }, defaultValue: "lumos" },
-    darkTheme: { control: "boolean", defaultValue: false },
     alignment: { control: { type: "select", options }, defaultValue: "vertical" },
     shape: { control: { type: "select", options: ["pill", "rounded"] }, defaultValue: "rounded" },
     disabled: { control: "boolean", defaultValue: false },

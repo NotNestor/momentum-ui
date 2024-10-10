@@ -8,16 +8,12 @@
 
 import "@/components/alert-banner/AlertBanner";
 import "@/components/icon/Icon";
-import { ThemeNameValues } from "@/components/theme/Theme";
-import { action } from "@storybook/addon-actions";
 import type { Args, Meta, StoryObj } from "@storybook/web-components";
 import { html } from "lit-html";
 import mdx from "./AlertBanner.mdx";
 
 const render = (args: Args) => html`
-  <md-theme class="theme-toggle" id="alert-banner" ?darkTheme=${args.darkTheme} theme=${args.theme}>
     <md-alert-banner
-      @alertBanner-hide=${action("dispatchEvent")}
       show
       type="${args.type}"
       ?closable=${args.closable}
@@ -25,13 +21,10 @@ const render = (args: Args) => html`
     >
       ${args.textContent ? `${args.textContent}` : `Text with slotted tag element`}
     </md-alert-banner>
-  </md-theme>
 `;
 
 export const AlertBanner: StoryObj = {
   args: {
-    theme: "lumos",
-    darkTheme: false,
     type: "default",
     closable: false,
     textContent: "Test Alert Message"
@@ -43,8 +36,6 @@ const meta: Meta = {
   title: "Components/Alert Banner",
   component: "md-alert-banner",
   argTypes: {
-    theme: { control: { type: "select", options: ThemeNameValues }, defaultValue: "lumos" },
-    darkTheme: { control: "boolean" },
     type: { control: { type: "select", options: ["default", "warning", "error", "success"] } }
   },
   parameters: {

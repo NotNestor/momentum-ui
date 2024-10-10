@@ -1,5 +1,4 @@
 import "@/components/date-time-picker/DateTimePicker";
-import { ThemeNameValues } from "@/components/theme/Theme";
 import { TIME_UNIT } from "@/constants";
 import { now } from "@/utils/dateUtils";
 import { Args } from "@storybook/web-components";
@@ -11,8 +10,6 @@ export default {
   title: "Components/Date Time Picker",
   component: "md-date-time-picker",
   argTypes: {
-    darkTheme: { control: "boolean", defaultValue: false },
-    theme: { control: { type: "select", options: ThemeNameValues }, defaultValue: "lumos" },
     weekStart: { control: { type: "select", options: DatePicker.weekStartDays }, defaultValue: "" },
     locale: { control: "text", defaultValue: "en-US" },
     disabled: { control: "boolean" },
@@ -32,19 +29,17 @@ export default {
 
 export const DateTimePicker = (args: Args) => {
   return html`
-    <md-theme class="theme-toggle" id="datetimepicker" ?darkTheme=${args.darkTheme} theme=${args.theme}>
-      <md-date-time-picker
-        ?disabled=${args.disabled}
-        value=${args.value}
-        minDate=${args.minDate}
-        maxDate=${args.maxDate}
-        locale=${args.locale}
-        weekStart=${args.weekStart}
-        ?two-digit-auto-tab=${args.twoDigitAutoTab}
-        ?twenty-four-hour-format=${args.twentyFourHourFormat}
-        timeSpecificity=${args.theTimeSpecificity}
-      >
-      </md-date-time-picker>
-    </md-theme>
+    <md-date-time-picker
+      ?disabled=${args.disabled}
+      value=${args.value}
+      minDate=${args.minDate}
+      maxDate=${args.maxDate}
+      locale=${args.locale}
+      weekStart=${args.weekStart}
+      ?two-digit-auto-tab=${args.twoDigitAutoTab}
+      ?twenty-four-hour-format=${args.twentyFourHourFormat}
+      timeSpecificity=${args.theTimeSpecificity}
+    >
+    </md-date-time-picker>
   `;
 };

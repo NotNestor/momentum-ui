@@ -42,22 +42,20 @@ export default {
 
 export const TaskItem = (args: Args) => {
   return html`
-    <md-theme class="theme-toggle" id="taskitem" ?darkTheme=${args.darkTheme} theme=${args.theme}>
-      <md-task-item
-        mediaType="${args.mediaType}"
-        status="${args.status}"
-        title="${args.title}"
-        queue="${args.queue}"
-        quantity="${args.quantity}"
-        lastmessage="${args.message}"
-        @taskitem-click=${action("click")}
-        @taskitem-keydown=${action("keydown")}
-      >
-        <md-badge slot="task-type" color="darkmint" circle>
-          <md-icon name="social-sms" size="20" iconSet="momentumDesign" color="white-100"></md-icon>
-        </md-badge>
-        <div>${args.time}</div>
-      </md-task-item>
-    </md-theme>
+    <md-task-item
+      mediaType="${args.mediaType}"
+      status="${args.status}"
+      title="${args.title}"
+      queue="${args.queue}"
+      quantity="${args.quantity}"
+      lastmessage="${args.message}"
+      @taskitem-click=${action("click")}
+      @taskitem-keydown=${action("keydown")}
+    >
+      <md-badge slot="task-type" color="darkmint" circle>
+        <md-icon name="social-sms" size="20" iconSet="momentumDesign" color="white-100"></md-icon>
+      </md-badge>
+      <div>${args.time}</div>
+    </md-task-item>
   `;
 };

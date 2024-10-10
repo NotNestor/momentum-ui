@@ -7,7 +7,6 @@
  */
 
 import "@/components/slider/Slider";
-import { ThemeNameValues } from "@/components/theme/Theme";
 import { action } from "@storybook/addon-actions";
 import { Args } from "@storybook/web-components";
 import { html } from "lit-element";
@@ -18,8 +17,6 @@ export default {
   argTypes: {
     sliderSelectionStyleMap: { table: { disable: true } },
     sliderPointerStyleMap: { table: { disable: true } },
-    theme: { control: { type: "select", options: ThemeNameValues }, defaultValue: "lumos" },
-    darkTheme: { control: "boolean", defaultValue: false },
     disabled: { control: "boolean", defaultValue: false },
     step: { control: "number", defaultValue: 1 },
     min: { control: "number", defaultValue: 0 },
@@ -37,18 +34,16 @@ export default {
 
 export const Slider = (args: Args) => {
   return html`
-    <md-theme class="theme-toggle" id="slider" ?darkTheme=${args.darkTheme} theme=${args.theme}>
-      <md-slider
-        @slider-change=${action("change")}
-        @slider-changing=${action("changing")}
-        .disabled=${args.disabled}
-        .min=${args.min}
-        .max=${args.max}
-        .step=${args.step}
-        .now=${args.now}
-        ?no-pointer=${args.nopointer}
-        ?hide-value=${args.hideValue}
-      ></md-slider>
-    </md-theme>
+    <md-slider
+      @slider-change=${action("change")}
+      @slider-changing=${action("changing")}
+      .disabled=${args.disabled}
+      .min=${args.min}
+      .max=${args.max}
+      .step=${args.step}
+      .now=${args.now}
+      ?no-pointer=${args.nopointer}
+      ?hide-value=${args.hideValue}
+    ></md-slider>
   `;
 };

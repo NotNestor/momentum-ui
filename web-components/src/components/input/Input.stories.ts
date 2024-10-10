@@ -10,7 +10,6 @@
 
 import "@/components/icon/Icon";
 import "@/components/input/Input";
-import { ThemeNameValues } from "@/components/theme/Theme";
 import { action } from "@storybook/addon-actions";
 import { Args } from "@storybook/web-components";
 import { html } from "lit";
@@ -42,48 +41,42 @@ const messageArr = [
 export const Input = (args: Args) => {
   if (args.hasNested) {
     return html`
-      <md-theme class="theme-toggle" id="input" ?darkTheme=${args.darkTheme} theme=${args.theme}>
-        <md-input label="Default Input"></md-input>
-        <md-input label="Input Nested Level" containerSize="small-12" .nestedLevel=${args.nested}></md-input>
-      </md-theme>
+      <md-input label="Default Input"></md-input>
+      <md-input label="Input Nested Level" containerSize="small-12" .nestedLevel=${args.nested}></md-input>
     `;
   } else if (args.hasIcon) {
     return html`
-      <md-theme class="theme-toggle" id="input" ?darkTheme=${args.darkTheme} theme=${args.theme}>
-        <md-input
-          label="Input Icon"
-          containerSize="small-12"
-          placeholder="Enter Text"
-          .auxiliaryContentPosition=${args.position as any}
-        >
-          <md-icon slot="input-section${args.position === "after" ? "-right" : ""}" name=${args.nameIcon}></md-icon>
-        </md-input>
-      </md-theme>
+      <md-input
+        label="Input Icon"
+        containerSize="small-12"
+        placeholder="Enter Text"
+        .auxiliaryContentPosition=${args.position as any}
+      >
+        <md-icon slot="input-section${args.position === "after" ? "-right" : ""}" name=${args.nameIcon}></md-icon>
+      </md-input>
     `;
   } else {
     return html`
-      <md-theme class="theme-toggle" id="input" ?darkTheme=${args.darkTheme} theme=${args.theme}>
-        <md-input
-          .label=${args.label}
-          .placeholder=${args.placeholder}
-          .messageArr=${[args.messageValue]}
-          .value=${args.value}
-          .containerSize="${args.size}"
-          .disabled=${args.disabled}
-          .shape=${args.shape}
-          ?readOnly=${args.readOnly}
-          ?multiline=${args.multiline}
-          .searchable=${args.searchable}
-          ?clear=${args.clear}
-          .secondaryLabel=${args.secondaryLabel}
-          .type=${args.type}
-          .helpText=${args.helpText}
-          @input-change=${action("change")}
-          @input-blur=${action("focus out")}
-          @input-focus=${action("focus in")}
-        >
-        </md-input>
-      </md-theme>
+      <md-input
+        .label=${args.label}
+        .placeholder=${args.placeholder}
+        .messageArr=${[args.messageValue]}
+        .value=${args.value}
+        .containerSize="${args.size}"
+        .disabled=${args.disabled}
+        .shape=${args.shape}
+        ?readOnly=${args.readOnly}
+        ?multiline=${args.multiline}
+        .searchable=${args.searchable}
+        ?clear=${args.clear}
+        .secondaryLabel=${args.secondaryLabel}
+        .type=${args.type}
+        .helpText=${args.helpText}
+        @input-change=${action("change")}
+        @input-blur=${action("focus out")}
+        @input-focus=${action("focus in")}
+      >
+      </md-input>
     `;
   }
 };
@@ -102,8 +95,6 @@ export default {
     multi: { table: { disable: true } },
     autofocus: { table: { disable: true } },
     htmlId: { table: { disable: true } },
-    theme: { conrol: { type: "select", options: ThemeNameValues }, defaultValue: "lumos" },
-    darkTheme: { control: "boolean", defaultValue: false },
     placeholder: { control: "text", defaultValue: "Enter Text" },
     label: { control: "text", defaultValue: "Label" },
     value: { control: "text", defaultValue: "Value Text" },

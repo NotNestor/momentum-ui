@@ -1,4 +1,3 @@
-import { ThemeNameValues } from "@/components/theme/Theme";
 import { now } from "@/utils/dateUtils";
 import { Args } from "@storybook/web-components";
 import { html } from "lit";
@@ -8,8 +7,6 @@ export default {
   title: "Components/Date Picker",
   component: "md-datepicker",
   argTypes: {
-    darkTheme: { control: "boolean", defaultValue: false },
-    theme: { control: { type: "select", options: ThemeNameValues }, defaultValue: "lumos" },
     weekStart: { control: { type: "select", options: DP.weekStartDays }, defaultValue: "" },
     locale: { control: "text", defaultValue: "en-US" },
     disabled: { control: "boolean" },
@@ -26,17 +23,15 @@ export default {
 
 export const DatePicker = (args: Args) => {
   return html`
-    <md-theme class="theme-toggle" id="datepicker" ?darkTheme=${args.darkTheme} theme=${args.theme}>
-      <md-datepicker
-        ?disabled=${args.disabled}
-        ?should-close-on-select=${args.shouldCloseOnSelect}
-        value=${args.value}
-        weekStart=${args.weekStart}
-        locale=${args.locale}
-        minDate=${args.minDate}
-        maxDate=${args.maxDate}
-      >
-      </md-datepicker>
-    </md-theme>
+    <md-datepicker
+      ?disabled=${args.disabled}
+      ?should-close-on-select=${args.shouldCloseOnSelect}
+      value=${args.value}
+      weekStart=${args.weekStart}
+      locale=${args.locale}
+      minDate=${args.minDate}
+      maxDate=${args.maxDate}
+    >
+    </md-datepicker>
   `;
 };

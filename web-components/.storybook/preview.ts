@@ -1,37 +1,76 @@
 import { setCustomElements } from "@storybook/web-components";
-import customElements from './custom-elements.json';
+import { ThemeNameValues } from "../src/components/theme/Theme";
+import customElements from "./custom-elements.json";
+import { withThemeDecorator } from "./themeDecorator";
 
-/** 
+/**
  * Custom element file generated automatically by execute this command
  * npx web-component-analyzer src\components\**\*.ts --outFile .storybook\custom-elements.json
-*/
+ */
 
 setCustomElements(customElements);
 
-export const preview = {
-  docs: {
-    inlineStories: false,
-  },
-  ally: {
-    config: {},
-    element: "#storybook-panel-root",
+const preview = {
+  parameters: {
+    a11y: {
+      options: {
+        runOnly: {
+          type: 'tag',
+          values: ['best-practice', 'wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'],
+        },
+      },
+    },
+    backgrounds: {
+      disable: true,
+      grid: {
+        disable: true
+      },
+      measure: {
+        disable: true
+      }
+    },
+    actions: { argTypesRegex: '^on[A-Z].*' },
+    controls: {
+      disableSaveFromUI: true,
+      expanded: true,
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/,
+      },
+    },
     options: {
-      checks: { 'color-contrast': { options: { noScroll: true } } },
-      restoreScroll: true,
-    }
+      storySort: {
+        order: ["Components", "Internal References"],
+        method: "alphabetical"
+      },
+    },
   },
-  controls: {
-    disableSaveFromUI: true,
-    expanded: true,
-    matchers: {
-      color: /(background|color)$/i,
-      date: /Date$/,
+  decorators: [withThemeDecorator],
+  globalTypes: {
+    theme: {
+      description: 'Global theme for components',
+      defaultValue: "lumos",
+      toolbar: {
+        title: 'Theme',
+        icon: 'globe',
+        items: ThemeNameValues,
+        dynamicTitle: true,
+      }
+    },
+    isDark:{
+      description: 'Global dark mode for components',
+      defaultValue: false,
+      toolbar: {
+        title: 'Dark',
+        icon: 'circlehollow',
+        items: [
+          { value: false, title: 'Light', icon: 'circlehollow' },
+          { value: true, title: 'Dark', icon: 'circle' },
+        ],
+        dynamicTitle: true,
+      },
     }
-  },
-  options: {
-    storySort: {
-      order: ['Components', 'Internal References'],
-      method: 'alphabetical'
-    }
-  }  
+  }
 };
+
+export default preview;

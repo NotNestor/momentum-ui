@@ -7,7 +7,6 @@
  */
 
 import "@/components/loading/Loading";
-import { ThemeNameValues } from "@/components/theme/Theme";
 import { Args, StoryObj } from "@storybook/web-components";
 import { html } from "lit";
 
@@ -23,8 +22,6 @@ export default {
   component: "md-loading",
   argTypes: {
     loadingClassMap: { table: { disable: true } },
-    theme: { control: { type: "select", options: ThemeNameValues }, defaultValue: "lumos" },
-    darkTheme: { control: "boolean", defaultValue: false },
     size: { control: { type: "select", options }, defaultValue: "middle" }
   },
   parameters: {
@@ -37,10 +34,6 @@ export default {
 export const Loading: StoryObj = {
   args: {},
   render: (args: Args) => {
-  return html`
-    <md-theme class="theme-toggle" id="loading" ?darkTheme=${args.darkTheme} theme=${args.theme}>
-      <md-loading size=${args.size}></md-loading>
-    </md-theme>
-  `;
+    return html` <md-loading size=${args.size}></md-loading> `;
   }
 };

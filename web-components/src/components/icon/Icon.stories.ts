@@ -7,7 +7,6 @@
  */
 
 import "@/components/icon/Icon";
-import { ThemeNameValues } from "@/components/theme/Theme";
 import momentumDesignManifest from "@momentum-design/icons/dist/manifest.json";
 import iconNames from "@momentum-ui/icons/data/momentumUiIconsNames.json";
 import { action } from "@storybook/addon-actions";
@@ -31,19 +30,17 @@ export const Icon = (args: Args) => {
   }
 
   return html`
-    <md-theme class="theme-toggle" id="icon" ?darkTheme=${args.darkTheme} theme=${args.theme}>
-      <md-icon
-        .name=${getIconSetIconName(args)}
-        .title=${args.title}
-        .color=${args.color}
-        .type=${args.type}
-        .size=${String(args.size)}
-        .sizeOverrided=${args.sizeOverrided}
-        .iconSet=${args.theIconSet}
-        @icon-click=${action("dispatchEvent")}
-      >
-      </md-icon>
-    </md-theme>
+    <md-icon
+      .name=${getIconSetIconName(args)}
+      .title=${args.title}
+      .color=${args.color}
+      .type=${args.type}
+      .size=${String(args.size)}
+      .sizeOverrided=${args.sizeOverrided}
+      .iconSet=${args.theIconSet}
+      @icon-click=${action("dispatchEvent")}
+    >
+    </md-icon>
   `;
 };
 
@@ -60,8 +57,6 @@ export default {
     buttonClassMap: { table: { disable: true } },
     isComboBoxIcon: { table: { disable: true } },
     isActive: { table: { disable: true } },
-    theme: { control: { type: "select", options: ThemeNameValues }, defaultValue: "lumos" },
-    darkTheme: { control: "boolean", defaultValue: false },
     color: { control: "color", defaultValue: "currentColor" },
     theIconSet: { control: { type: "select", options: iconSet }, defaultValue: "momentumDesign" },
     momentumUIName: { control: { type: "select", options: iconNames }, defaultValue: "arrow-up_16" },
