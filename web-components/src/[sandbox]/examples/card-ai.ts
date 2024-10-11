@@ -21,20 +21,20 @@ export class CardAiTemplateSandbox extends LitElement {
     this.addEventListener("thumbs-down-toggled", this.handleThumbsDownToggled as EventListener);
   }
 
-  private handleThumbsDownToggled(e: MouseEvent) {
-    const { id } = e.detail as any;
+  private handleThumbsDownToggled(e: MouseEvent | CustomEvent) {
+    const { id } = e.detail;
 
     this.value = "Thumbs down " + id + " actioned";
   }
 
-  private handleThumbsUpToggled(e: MouseEvent) {
-    const { id } = e.detail as any;
+  private handleThumbsUpToggled(e: MouseEvent | CustomEvent) {
+    const { id } = e.detail;
 
     this.value = "Thumbs up " + id + " actioned";
   }
 
-  private handleSummariseMoreToggled(e: MouseEvent) {
-    const { id } = e.detail as any;
+  private handleSummariseMoreToggled(e: MouseEvent | CustomEvent) {
+    const { id } = e.detail;
 
     this.value = "Summarise more " + id + " actioned";
   }

@@ -51,19 +51,19 @@ describe("Chip component", () => {
     const component: Chip.ELEMENT = await fixture(html`
       <md-chip value="chip text content" determinateProgress="50"></md-chip>
     `);
-    expect(component.shadowRoot?.querySelector("md-progress-bar")).not.toBeNull;
+    expect(component.shadowRoot?.querySelector("md-progress-bar")).not.toBeNull();
   });
   test("should render indeterminate progress bar", async () => {
     const component: Chip.ELEMENT = await fixture(html`
       <md-chip value="chip text content" indeterminateProgress></md-chip>
     `);
-    expect(component.shadowRoot?.querySelector("md-progress-bar")).not.toBeNull;
+    expect(component.shadowRoot?.querySelector("md-progress-bar")).not.toBeNull();
   });
   test("should render an icon when icon attribute is used", async () => {
     const component: Chip.ELEMENT = await fixture(html`
       <md-chip value="chip text content" icon="icon-alert_16"></md-chip>
     `);
-    expect(component.shadowRoot?.querySelector("md-icon")).not.toBeNull;
+    expect(component.shadowRoot?.querySelector("md-icon")).not.toBeNull();
   });
 
   test("should set disabled state", async () => {
@@ -105,10 +105,10 @@ describe("Chip component", () => {
 
     component.handleSelect();
     await elementUpdated(component);
-    expect(component.selected).toBeTruthy;
+    expect(component.selected).toBeTruthy();
     component.handleDeSelect();
     await elementUpdated(component);
-    expect(component.selected).toBeFalsy;
+    expect(component.selected).toBeFalsy();
   });
 
   test("should return add tooltip text", async () => {

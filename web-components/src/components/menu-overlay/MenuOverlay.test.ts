@@ -2,13 +2,13 @@ import "@/components/button/Button";
 import "@/components/input/Input";
 import { Key } from "@/constants";
 import {
-    defineCE,
-    elementUpdated,
-    fixture,
-    fixtureCleanup,
-    fixtureSync,
-    nextFrame,
-    oneEvent
+  defineCE,
+  elementUpdated,
+  fixture,
+  fixtureCleanup,
+  fixtureSync,
+  nextFrame,
+  oneEvent
 } from "@open-wc/testing-helpers";
 import { html, PropertyValues } from "lit";
 import "./MenuOverlay";
@@ -188,7 +188,7 @@ describe("MenuOverlay", () => {
     triggerElement.dispatchEvent(new MouseEvent("click"));
     await nextFrame();
 
-    expect(triggerElement.getAttribute("aria-expanded")).toBeTruthy;
+    expect(triggerElement.getAttribute("aria-expanded")).toBeTruthy();
     expect(element.isOpen).toBeTruthy();
     element.isOpen = false;
   });

@@ -1,5 +1,6 @@
 import "@/components/icon/Icon";
 import { fixture, fixtureCleanup, html } from "@open-wc/testing-helpers";
+import { nothing } from "lit/html.js";
 import "./Badge";
 import { Badge } from "./Badge";
 
@@ -91,10 +92,10 @@ describe("Badge component", () => {
   test("no attributes set", async () => {
     const component: Badge.ELEMENT = await fixture(html` <md-badge></md-badge> `);
 
-    expect(component.bgColor).toBeFalsy;
-    expect(component.textColor).toBeFalsy;
-    expect(component.height).toBeFalsy;
-    expect(component.width).toBeFalsy;
-    expect(component.getStyles()).toBeFalsy;
+    expect(component.bgColor).toBeFalsy();
+    expect(component.textColor).toBeFalsy();
+    expect(component.height).toBeFalsy();
+    expect(component.width).toBeFalsy();
+    expect(component.getStyles()).toBe(nothing);
   });
 });

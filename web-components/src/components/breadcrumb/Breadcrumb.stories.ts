@@ -29,21 +29,17 @@ const breadCrumb = [
   }
 ];
 
-const render = (args: Args) => html`
-    <md-breadcrumb .navCrumbs="${breadCrumb}"></md-breadcrumb>
-`;
+const render = (args: Args) => html` <md-breadcrumb .navCrumbs="${breadCrumb}"></md-breadcrumb> `;
 
 export const Breadcrumb: StoryObj = {
-  args: {
-  },
+  args: {},
   render: render
 };
 
 const meta: Meta = {
   title: "Components/Breadcrumb",
   component: "md-breadcrumb",
-  argTypes: {
-  },
+  argTypes: {},
   parameters: {
     a11y: {
       element: "md-breadcrumb"

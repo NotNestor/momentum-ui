@@ -20,10 +20,10 @@ module.exports = {
   ],
 
   addons: [
-    '@storybook/addon-controls',
-    '@storybook/addon-links',
-    '@storybook/addon-a11y',
-    '@storybook/addon-essentials'
+    "@storybook/addon-controls",
+    "@storybook/addon-links",
+    "@storybook/addon-a11y",
+    "@storybook/addon-essentials"
   ],
   framework: {
     name: "@storybook/web-components-webpack5",

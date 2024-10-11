@@ -141,7 +141,7 @@ describe("Table Advanced component", () => {
 
     row?.click();
     await elementUpdated(elem);
-    expect(elem["isSelectable"]).toBeTruthy;
+    expect(elem["isSelectable"]).toBeTruthy();
   });
 
   test("should set selected row", async () => {
@@ -153,7 +153,7 @@ describe("Table Advanced component", () => {
     col1.isCollapsable = true;
     await elementUpdated(elem);
 
-    expect(collapseBtn).toBeDefined;
+    expect(collapseBtn).toBeDefined();
     const collapseIcon = elem.shadowRoot?.querySelector("table tbody tr td .row-collapsible md-icon") as HTMLElement;
     expect(collapseIcon?.getAttribute("name")).toEqual("plus-bold");
 

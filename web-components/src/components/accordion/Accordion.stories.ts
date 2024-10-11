@@ -26,8 +26,7 @@ export const Accordion: StoryObj = {
 const meta: Meta = {
   title: "Components/Accordion",
   component: "md-accordion",
-  argTypes: {
-  },
+  argTypes: {},
   parameters: {
     a11y: {
       element: "md-accordion"

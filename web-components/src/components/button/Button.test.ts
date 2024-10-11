@@ -28,9 +28,9 @@ describe("Button Component", () => {
 
   test("should render Loading component is pass loading props", async () => {
     const element: Button.ELEMENT = await fixture(html` <md-button loading></md-button> `);
-    expect(element.loading).toBeTruthy;
+    expect(element.loading).toBeTruthy();
     const spinner = element.shadowRoot!.querySelector(".md-button md-spinner");
-    expect(spinner).toBeDefined;
+    expect(spinner).toBeDefined();
     expect(spinner?.getAttribute("size")).toEqual("16");
   });
 

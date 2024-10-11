@@ -26,8 +26,8 @@ export namespace CodeEditor {
     @state() private acceptTypes = "";
     @state() private copied = false;
 
-    @queryAssignedNodes({slot:"code-block"}) slotNodes!: Node[];
-    @queryAssignedNodes({slot:"code-url"}) slotUrl!: Node[];
+    @queryAssignedNodes({ slot: "code-block" }) slotNodes!: Node[];
+    @queryAssignedNodes({ slot: "code-url" }) slotUrl!: Node[];
 
     static get styles() {
       return [reset, styles];

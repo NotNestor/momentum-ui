@@ -214,7 +214,7 @@ describe("TaskItem", () => {
       true
     );
 
-    expect(element.selected).toBeTruthy;
+    expect(element.selected).toBeTruthy();
     const type = element.shadowRoot?.querySelector("md-icon");
     const status = element.shadowRoot?.querySelector(".md-taskitem__status md-icon");
     expect(type?.getAttribute("name")).toEqual("email-filled");

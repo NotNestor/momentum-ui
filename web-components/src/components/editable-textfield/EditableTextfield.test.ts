@@ -48,7 +48,7 @@ describe("Editable Textfield component", () => {
     component.handleFocus();
     await elementUpdated(component);
 
-    expect(component.isEditing).toBeTruthy;
+    expect(component.isEditing).toBeTruthy();
   });
 
   test("shouldn't change property if component is disabled", async () => {
@@ -147,10 +147,10 @@ describe("Editable Textfield component", () => {
     const el: EditableTextfield.ELEMENT = await fixture(html` <md-editable-field></md-editable-field> `);
     el.type = "integer";
     await el.updateComplete;
-    expect(el.checkValidity && el.checkValidity(validInputs.integer)).toBeTruthy;
+    expect(el.checkValidity && el.checkValidity(validInputs.integer)).toBeTruthy();
     el.type = "decimal";
     await el.updateComplete;
-    expect(el.checkValidity && el.checkValidity(validInputs.decimal)).toBeTruthy;
+    expect(el.checkValidity && el.checkValidity(validInputs.decimal)).toBeTruthy();
   });
   test("should check keydown entry for type violation", async () => {
     const el: EditableTextfield.ELEMENT = await fixture(html`
@@ -170,7 +170,7 @@ describe("Editable Textfield component", () => {
     const el: EditableTextfield.ELEMENT = await fixture(html`
       <md-editable-field pattern="^([+-]?[1-9]\\d*|0)$"></md-editable-field>
     `);
-    expect(el.checkValidity && el.checkValidity(validInputs.integer)).toBeTruthy;
+    expect(el.checkValidity && el.checkValidity(validInputs.integer)).toBeTruthy();
   });
   test("should return false for invalid pattern", async () => {
     const el: EditableTextfield.ELEMENT = await fixture(html`

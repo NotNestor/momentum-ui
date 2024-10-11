@@ -107,9 +107,9 @@ describe("DateTime Module", () => {
     const date2 = DateTime.fromSQL("2020-10-10");
     const date3 = DateTime.fromSQL("2020-10-10").plus({ days: 2 });
     const utilFuncReturn1 = isSameDay(date1, date2);
-    expect(utilFuncReturn1).toBeTruthy;
+    expect(utilFuncReturn1).toBeTruthy();
     const utilFuncReturn2 = isSameDay(date1, date3);
-    expect(utilFuncReturn2).toBeFalsy;
+    expect(utilFuncReturn2).toBeFalsy();
   });
   test("isSameMonth function returns a correct boolean", async () => {
     const date1 = DateTime.fromSQL("2020-10-10");
@@ -119,9 +119,9 @@ describe("DateTime Module", () => {
     const date2 = DateTime.fromSQL("2020-10-10");
     const date3 = DateTime.fromSQL("2020-10-10").plus({ months: 2 });
     const utilFuncReturn1 = isSameMonth(date1, date2);
-    expect(utilFuncReturn1).toBeTruthy;
+    expect(utilFuncReturn1).toBeTruthy();
     const utilFuncReturn2 = isSameMonth(date1, date3);
-    expect(utilFuncReturn2).toBeFalsy;
+    expect(utilFuncReturn2).toBeFalsy();
   });
 
   test("isDayDisabled returns correct boolean", async () => {
@@ -143,14 +143,14 @@ describe("DateTime Module", () => {
     const utilFuncReturn4 = isDayDisabled(validDate, filters);
 
     if (date1.weekdayShort.startsWith("M")) {
-      expect(utilFuncReturn1).toBeTruthy;
+      expect(utilFuncReturn1).toBeTruthy();
     } else {
-      expect(utilFuncReturn1).toBeFalsy;
+      expect(utilFuncReturn1).toBeFalsy();
     }
 
-    expect(utilFuncReturn2).toBeTruthy;
-    expect(utilFuncReturn3).toBeTruthy;
-    expect(utilFuncReturn4).toBeFalsy;
+    expect(utilFuncReturn2).toBeTruthy();
+    expect(utilFuncReturn3).toBeTruthy();
+    expect(utilFuncReturn4).toBeFalsy();
   });
 
   test("shouldPrevMonthDisable returns correct boolean", async () => {
@@ -159,8 +159,8 @@ describe("DateTime Module", () => {
     const minDateOutsideMonth = date.minus({ month: 1 });
     const utilFuncReturn1 = shouldPrevMonthDisable(date, minDateInMonth);
     const utilFuncReturn2 = shouldPrevMonthDisable(date, minDateOutsideMonth);
-    expect(utilFuncReturn1).toBeTruthy;
-    expect(utilFuncReturn2).toBeFalsy;
+    expect(utilFuncReturn1).toBeTruthy();
+    expect(utilFuncReturn2).toBeFalsy();
   });
   test("shouldNextMonthDisable returns correct boolean", async () => {
     const date = DateTime.fromSQL("2020-10-10");
@@ -168,7 +168,7 @@ describe("DateTime Module", () => {
     const minDateOutsideMonth = date.plus({ month: 1 });
     const utilFuncReturn1 = shouldNextMonthDisable(date, minDateInMonth);
     const utilFuncReturn2 = shouldNextMonthDisable(date, minDateOutsideMonth);
-    expect(utilFuncReturn1).toBeTruthy;
-    expect(utilFuncReturn2).toBeFalsy;
+    expect(utilFuncReturn1).toBeTruthy();
+    expect(utilFuncReturn2).toBeFalsy();
   });
 });

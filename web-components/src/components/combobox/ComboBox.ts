@@ -1770,15 +1770,15 @@ export namespace ComboBox {
                           .length > 0
                       ? html`
                           <div class="virtual-scroll" @rangeChanged=${this.rangeChanged}>
-                          ${virtualize({
-                            scroller: true,
-                            items: this.filterOptions(
-                              this.trimSpace ? this.inputValue.replace(/\s+/g, "") : this.inputValue
-                            ),
-                            renderItem: (item: string | OptionMember, index?: number) =>
-                              this.renderItem(item, index || 0)
-                          })}
-                        </div>
+                            ${virtualize({
+                              scroller: true,
+                              items: this.filterOptions(
+                                this.trimSpace ? this.inputValue.replace(/\s+/g, "") : this.inputValue
+                              ),
+                              renderItem: (item: string | OptionMember, index?: number) =>
+                                this.renderItem(item, index || 0)
+                            })}
+                          </div>
                         `
                       : nothing}
                   ${this.options.length &&

@@ -11,14 +11,15 @@ import { withThemeDecorator } from "./themeDecorator";
 setCustomElements(customElements);
 
 const preview = {
+  tags: ["autodocs"],
   parameters: {
     a11y: {
       options: {
         runOnly: {
-          type: 'tag',
-          values: ['best-practice', 'wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'],
-        },
-      },
+          type: "tag",
+          values: ["best-practice", "wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]
+        }
+      }
     },
     backgrounds: {
       disable: true,
@@ -34,40 +35,40 @@ const preview = {
       expanded: true,
       matchers: {
         color: /(background|color)$/i,
-        date: /Date$/,
-      },
+        date: /Date$/
+      }
     },
     options: {
       storySort: {
         order: ["Components", "Internal References"],
         method: "alphabetical"
-      },
-    },
+      }
+    }
   },
   decorators: [withThemeDecorator],
   globalTypes: {
     theme: {
-      description: 'Global theme for components',
+      description: "Global theme for components",
       defaultValue: "lumos",
       toolbar: {
-        title: 'Theme',
-        icon: 'globe',
+        title: "Theme",
+        icon: "globe",
         items: ThemeNameValues,
-        dynamicTitle: true,
+        dynamicTitle: true
       }
     },
-    isDark:{
-      description: 'Global dark mode for components',
+    isDark: {
+      description: "Global dark mode for components",
       defaultValue: false,
       toolbar: {
-        title: 'Dark',
-        icon: 'circlehollow',
+        title: "Dark",
+        icon: "circlehollow",
         items: [
-          { value: false, title: 'Light', icon: 'circlehollow' },
-          { value: true, title: 'Dark', icon: 'circle' },
+          { value: false, title: "Light", icon: "circlehollow" },
+          { value: true, title: "Dark", icon: "circle" }
         ],
-        dynamicTitle: true,
-      },
+        dynamicTitle: true
+      }
     }
   }
 };
