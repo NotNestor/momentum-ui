@@ -38,7 +38,7 @@ const meta: Meta = {
   title: "Components/Badge",
   component: "md-badge",
   argTypes: {
-    color: { control: { type: "select", options: badgeColor } },
+    color: { control: { type: "select" }, options: badgeColor },
     renderBgColor: { table: { disable: true } },
     renderTextColor: { table: { disable: true } },
     renderHeight: { table: { disable: true } },

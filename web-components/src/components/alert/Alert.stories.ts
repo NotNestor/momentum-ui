@@ -55,24 +55,14 @@ export const Alerts: StoryObj = {
 
 export const AlertWithIcon: StoryObj = {
   args: {
-    show: true,
-    title: "Alert",
-    message: "Who is awesome? You are!",
-    type: "default",
-    closable: true,
-    inline: false
+    ...Alerts.args
   },
   render: alertWithIconRender
 };
 
 export const AlertWithSlots: StoryObj = {
   args: {
-    show: true,
-    title: "Alert",
-    message: "Who is awesome? You are!",
-    type: "default",
-    closable: true,
-    inline: false
+    ...Alerts.args
   },
   render: alertWithSlots
 };

@@ -9,14 +9,14 @@
 import "@/components/icon/Icon";
 import "@/components/menu/Menu";
 import "@/components/menu/MenuItem";
-import { Args } from "@storybook/web-components";
+import { Args, StoryObj } from "@storybook/web-components";
 import { html } from "lit";
 
 export default {
   title: "Components/Menu",
   component: "md-menu",
   argTypes: {
-    direction: { control: { type: "select", options: ["horizontal", "vertical"] }, defaultValue: "horizontal" },
+    direction: { control: { type: "select" }, options: ["horizontal", "vertical"], defaultValue: "horizontal" },
     justified: { control: "boolean" },
     disabled: { control: "boolean" },
     href: { control: "text", defaultValue: "" }
@@ -28,7 +28,7 @@ export default {
   }
 };
 
-export const Menu = (args: Args) => {
+const render = (args: Args) => {
   return html`
     <md-menu .direction="${args.direction}" .justified=${args.justified}>
       <md-menu-item>
@@ -53,4 +53,14 @@ export const Menu = (args: Args) => {
       </md-menu-item>
     </md-menu>
   `;
+};
+
+export const Menu: StoryObj = {
+  args: {
+    direction: "horizontal",
+    justified: false,
+    disabled: false,
+    href: ""
+  },
+  render: render
 };

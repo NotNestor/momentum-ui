@@ -30,13 +30,13 @@ const render = (args: Args) => html`
 export const Link: StoryObj = {
   args: {
     href: "http://google.com",
-    tag: "",
+    tag: "a",
     disabled: false,
     inline: false,
     target: "_self",
     color: "blue",
     ariaLabel: "Link Storybook",
-    role: ""
+    role: "link"
   },
   render: render
 };
@@ -45,9 +45,9 @@ const meta: Meta = {
   title: "Components/Link",
   component: "md-link",
   argTypes: {
-    tag: { control: { type: "select", options: linkTag } },
-    color: { control: { type: "select", options: linkColor } },
-    role: { control: { type: "select", options: linkRole } }
+    tag: { control: { type: "select" }, options: linkTag },
+    color: { control: { type: "select" }, options: linkColor },
+    role: { control: { type: "select" }, options: linkRole }
   },
   parameters: {
     a11y: {

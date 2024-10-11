@@ -17,7 +17,8 @@ export default {
   component: "md-card-ai",
   argTypes: {
     variant: {
-      control: { type: "select", options: Object.values(CardAiVariant) },
+      control: { type: "select" },
+      options: Object.values(CardAiVariant),
       defaultValue: CardAiVariant.RESPONSE
     },
     id: { control: "text", defaultValue: "12345678" },
@@ -35,23 +36,23 @@ export default {
 
 export const CardAi = (args: Args) => {
   return html`
-      <md-card-ai
-        id=${args.id}
-        title=${args.title}
-        cardText=${args.cardText}
-        timestamp=${args.timestamp}
-        variant=${args.variant}
-        .summariseMoreVisible=${args.summariseMoreVisible}
-        @thumbs-up-toggled=${(e: CustomEvent<{ id: string }>) => {
-          action("thumbs-up-toggled")(e.detail);
-        }}
-        @thumbs-down-toggled=${(e: CustomEvent<{ id: string }>) => {
-          action("thumbs-down-toggled")(e.detail);
-        }}
-        @summarise-more-toggled=${(e: CustomEvent<{ id: string }>) => {
-          action("summarise-more-toggled")(e.detail);
-        }}
-      >
-      </md-card-ai>
+    <md-card-ai
+      id=${args.id}
+      title=${args.title}
+      cardText=${args.cardText}
+      timestamp=${args.timestamp}
+      variant=${args.variant}
+      .summariseMoreVisible=${args.summariseMoreVisible}
+      @thumbs-up-toggled=${(e: CustomEvent<{ id: string }>) => {
+        action("thumbs-up-toggled")(e.detail);
+      }}
+      @thumbs-down-toggled=${(e: CustomEvent<{ id: string }>) => {
+        action("thumbs-down-toggled")(e.detail);
+      }}
+      @summarise-more-toggled=${(e: CustomEvent<{ id: string }>) => {
+        action("summarise-more-toggled")(e.detail);
+      }}
+    >
+    </md-card-ai>
   `;
 };

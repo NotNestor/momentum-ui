@@ -1,5 +1,5 @@
 import { now } from "@/utils/dateUtils";
-import { Args } from "@storybook/web-components";
+import { Args, StoryObj } from "@storybook/web-components";
 import { html } from "lit";
 import { DatePicker as DP } from "./DatePicker"; // Keep type import as a relative path
 
@@ -7,12 +7,12 @@ export default {
   title: "Components/Date Picker",
   component: "md-datepicker",
   argTypes: {
-    weekStart: { control: { type: "select", options: DP.weekStartDays }, defaultValue: "" },
-    locale: { control: "text", defaultValue: "en-US" },
+    weekStart: { control: { type: "select" }, options: DP.weekStartDays },
+    locale: { control: { type: "text" } },
     disabled: { control: "boolean" },
-    minDate: { control: "text", defaultValue: now().minus({ day: 5 }).toISODate() },
-    maxDate: { control: "text", defaultValue: now().plus({ day: 30 }).toISODate() },
-    value: { control: "text", defaultValue: now().toISODate() }
+    minDate: { control: { type: "text" } },
+    maxDate: { control: { type: "text" } },
+    value: { control: { type: "text" } }
   },
   parameters: {
     a11y: {
@@ -21,17 +21,25 @@ export default {
   }
 };
 
-export const DatePicker = (args: Args) => {
-  return html`
-    <md-datepicker
-      ?disabled=${args.disabled}
-      ?should-close-on-select=${args.shouldCloseOnSelect}
-      value=${args.value}
-      weekStart=${args.weekStart}
-      locale=${args.locale}
-      minDate=${args.minDate}
-      maxDate=${args.maxDate}
-    >
-    </md-datepicker>
-  `;
+export const DatePicker: StoryObj = {
+  args: {
+    locale: "en-US",
+    minDate: now().minus({ day: 5 }).toISODate(),
+    maxDate: now().plus({ day: 30 }).toISODate(),
+    value: now().toISODate()
+  },
+  render: (args: Args) => {
+    return html`
+      <md-datepicker
+        ?disabled=${args.disabled}
+        ?should-close-on-select=${args.shouldCloseOnSelect}
+        value=${args.value}
+        weekStart=${args.weekStart}
+        locale=${args.locale}
+        minDate=${args.minDate}
+        maxDate=${args.maxDate}
+      >
+      </md-datepicker>
+    `;
+  }
 };

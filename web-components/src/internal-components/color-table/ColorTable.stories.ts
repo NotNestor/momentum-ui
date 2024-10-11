@@ -8,7 +8,7 @@
 
 import "@/internal-components/color-table/ColorTable";
 import { Args, Meta, StoryObj } from "@storybook/web-components";
-import { html } from "lit-element";
+import { html } from "lit";
 
 const render = (args: Args) => html` <color-table></color-table> `;
 

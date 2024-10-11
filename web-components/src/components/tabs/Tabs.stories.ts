@@ -10,8 +10,8 @@ import "@/components/tabs/Tab";
 import "@/components/tabs/TabPanel";
 import "@/components/tabs/Tabs";
 import { action } from "@storybook/addon-actions";
-import { Args } from "@storybook/web-components";
-import { html } from "lit-element";
+import { Args, StoryObj } from "@storybook/web-components";
+import { html } from "lit";
 
 const closeOptions = ["", "auto", "custom"] as const;
 
@@ -137,8 +137,13 @@ const moreTabs = (args: Args) => {
   `;
 };
 
-export const Tabs = (args: Args) => {
-  return html` ${args.more ? moreTabs(args) : tabs(args)} `;
+export const Tabs: StoryObj = {
+  args: {
+    alignment: "horizontal"
+  },
+  render: (args: Args) => {
+    return html` ${args.more ? moreTabs(args) : tabs(args)} `;
+  }
 };
 
 export default {
@@ -153,8 +158,8 @@ export default {
     tabsListElement: { table: { disable: true } },
     slotItem: { table: { disable: true } },
     draggable: { control: "boolean", defaultValue: false },
-    alignment: { control: { type: "select", options: ["horizontal", "vertical"] }, defaultValue: "horizontal" },
-    closable: { control: { type: "select", options: closeOptions }, defaultValue: "" },
+    alignment: { control: { type: "select" }, options: ["horizontal", "vertical"], defaultValue: "horizontal" },
+    closable: { control: { type: "select" }, options: closeOptions },
     settings: { control: "boolean", defaultValue: false }
   },
   parameters: {

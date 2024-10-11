@@ -16,7 +16,7 @@ import mdx from "./Button.mdx";
 
 const render = (args: Args) => html`
   <md-button
-    @button-click=${action("ditail")}
+    @button-click=${action("detail")}
     variant=${args.variant}
     .color=${args.color}
     .disabled=${args.disabled}
@@ -67,12 +67,12 @@ const meta: Meta = {
     slottedText: { table: { disable: true } },
     getStyles: { table: { disable: true } },
     keyboardKey: { table: { disable: true } },
-    variant: { control: { type: "select", options: buttonVariant } },
-    color: { control: { type: "select", options: buttonColor } },
-    size: { control: { type: "select", options: buttonSize } },
-    tag: { control: { type: "select", options: buttonTag } },
-    type: { control: { type: "select", options: buttonType } },
-    role: { control: { type: "select", options: buttonRoles } }
+    variant: { control: { type: "select" }, options: buttonVariant },
+    color: { control: { type: "select" }, options: buttonColor },
+    size: { control: { type: "select" }, options: buttonSize },
+    tag: { control: { type: "select" }, options: buttonTag },
+    type: { control: { type: "select" }, options: buttonType },
+    role: { control: { type: "select" }, options: buttonRoles }
   },
   parameters: {
     a11y: {

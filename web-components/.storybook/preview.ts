@@ -13,6 +13,9 @@ setCustomElements(customElements);
 const preview = {
   tags: ["autodocs"],
   parameters: {
+    docs: {
+      inlineStories: true,
+    },
     a11y: {
       options: {
         runOnly: {

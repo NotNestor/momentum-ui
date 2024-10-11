@@ -7,16 +7,16 @@
  */
 
 import "@/components/chat-message/ChatMessage";
-import { Args } from "@storybook/web-components";
+import { Args, StoryObj } from "@storybook/web-components";
 import { html } from "lit";
 
 export default {
   title: "Components/Chat Message",
   component: "md-chat-message",
   argTypes: {
-    title: { control: "text", defaultValue: "John Doe" },
-    message: { control: "text", defaultValue: "I have issue with my silencer" },
-    selfMode: { control: "boolean", defaultValue: false }
+    title: { control: "text" },
+    message: { control: "text" },
+    selfMode: { control: "boolean" }
   },
   parameters: {
     a11y: {
@@ -25,10 +25,17 @@ export default {
   }
 };
 
-export const ChatMessage = (args: Args) => {
-  return html`
-    <md-chat-message .self=${args.selfMode} title=${args.title} time="11:27AM">
-      <p slot="message">${args.message}</p>
-    </md-chat-message>
-  `;
+export const ChatMessage: StoryObj = {
+  args: {
+    title: "John Doe",
+    message: "I have issue with my silencer",
+    selfMode: false
+  },
+  render: (args: Args) => {
+    return html`
+      <md-chat-message .self=${args.selfMode} title=${args.title} time="11:27AM">
+        <p slot="message">${args.message}</p>
+      </md-chat-message>
+    `;
+  }
 };

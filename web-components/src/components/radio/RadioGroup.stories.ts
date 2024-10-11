@@ -8,14 +8,14 @@
 
 import "@/components/radio/Radio";
 import "@/components/radio/RadioGroup";
-import { Args } from "@storybook/web-components";
-import { html } from "lit-element";
+import { Args, StoryObj } from "@storybook/web-components";
+import { html } from "lit";
 
 export default {
   title: "Components/Radio",
   component: "md-radio",
   argTypes: {
-    alignment: { control: { type: "select", options: ["horizontal", "vertical"] }, defaultValue: "horizontal" },
+    alignment: { control: { type: "select" }, options: ["horizontal", "vertical"], defaultValue: "vertical" },
     check: { control: "number", defaultValue: 1 },
     disabled: { control: "boolean", defaultValue: false }
   },
@@ -26,7 +26,7 @@ export default {
   }
 };
 
-export const Radio = (args: Args) => {
+const render = (args: Args) => {
   return html`
     <md-radiogroup
       group-label="group_process"
@@ -39,4 +39,11 @@ export const Radio = (args: Args) => {
       <md-radio slot="radio" value="building" .disabled=${args.disabled}>Building</md-radio>
     </md-radiogroup>
   `;
+};
+
+export const Radio: StoryObj = {
+  args: {
+    alignment: "vertical"
+  },
+  render: render
 };

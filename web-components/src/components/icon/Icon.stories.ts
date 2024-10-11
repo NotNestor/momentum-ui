@@ -20,7 +20,7 @@ const momentumDesignManifestArray = Object.keys(momentumDesignManifest).map((key
 }));
 const momentumDesignNames = momentumDesignManifestArray.map((item) => item.name);
 
-export const Icon = (args: Args) => {
+const render = (args: Args) => {
   function getIconSetIconName(args: Args) {
     if (args.theIconSet !== "momentumDesign") {
       return `icon-${args.momentumUIName}`;
@@ -44,6 +44,19 @@ export const Icon = (args: Args) => {
   `;
 };
 
+export const Icon: Args = {
+  args: {
+    theIconSet: "momentumDesign",
+    momentumUIName: "arrow-up_16",
+    momentumDesignName: "arrow-up-bold",
+    title: "",
+    type: "",
+    size: "16",
+    sizeOverrided: false
+  },
+  render: render
+};
+
 export default {
   title: "Components/Icon",
   component: "md-icon",
@@ -57,13 +70,13 @@ export default {
     buttonClassMap: { table: { disable: true } },
     isComboBoxIcon: { table: { disable: true } },
     isActive: { table: { disable: true } },
-    color: { control: "color", defaultValue: "currentColor" },
-    theIconSet: { control: { type: "select", options: iconSet }, defaultValue: "momentumDesign" },
-    momentumUIName: { control: { type: "select", options: iconNames }, defaultValue: "arrow-up_16" },
-    momentumDesignName: { control: { type: "select", options: momentumDesignNames }, defaultValue: "arrow-up-bold" },
+    color: { control: { type: "color" } },
+    theIconSet: { control: { type: "select" }, options: iconSet },
+    momentumUIName: { control: { type: "select" }, options: iconNames },
+    momentumDesignName: { control: { type: "select" }, options: momentumDesignNames },
     title: { control: "text", defaultValue: "" },
-    type: { control: { type: "select", options: iconType }, defaultValue: "" },
-    size: { control: { type: "select", options: iconSize }, defaultValue: "16" },
+    type: { control: { type: "select" }, options: iconType, defaultValue: "" },
+    size: { control: { type: "select" }, options: iconSize, defaultValue: "16" },
     sizeOverrided: { control: "boolean", defaultValue: false }
   },
   parameters: {

@@ -12,7 +12,7 @@ import "@/components/tooltip/Tooltip";
 import { tooltipPlacement } from "@/components/tooltip/Tooltip";
 import { action } from "@storybook/addon-actions";
 import { Args, Meta, StoryObj } from "@storybook/web-components";
-import { html } from "lit-element";
+import { html } from "lit";
 
 export const Tooltip: StoryObj = {
   args: {
@@ -40,10 +40,10 @@ const meta: Meta = {
   argTypes: {
     reference: { table: { disable: true } },
     popper: { table: { disable: true } },
-    placement: { 
+    placement: {
       control: { type: "select" },
-      options: tooltipPlacement 
-    } 
+      options: tooltipPlacement
+    }
   },
   parameters: {
     a11y: {

@@ -8,10 +8,10 @@
 
 import "@/components/toggle-switch/ToggleSwitch";
 import { alignLabel } from "@/components/toggle-switch/ToggleSwitch";
-import { Args, Meta } from "@storybook/web-components";
-import { html } from "lit-element";
+import { Args, Meta, StoryObj } from "@storybook/web-components";
+import { html } from "lit";
 
-export const ToggleSwitch = (args: Args) => html`
+const render = (args: Args) => html`
   <md-toggle-switch
     htmlId="toggleSwitch"
     ?checked=${args.checked}
@@ -23,13 +23,20 @@ export const ToggleSwitch = (args: Args) => html`
   </md-toggle-switch>
 `;
 
+export const ToggleSwitch: StoryObj = {
+  args: {
+    align: "right"
+  },
+  render: render
+};
+
 const meta: Meta = {
   title: "Components/Toggle Switch",
   component: "md-toggle-switch",
   argTypes: {
     toggleSwitchClassMap: { table: { disable: true } },
     autofocus: { table: { disable: true } },
-    align: { control: { type: "select", options: alignLabel }, defaultValue: "right" }
+    align: { control: { type: "select" }, options: alignLabel, defaultValue: "right" }
   },
   parameters: {
     a11y: {

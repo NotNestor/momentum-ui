@@ -33,32 +33,35 @@ export namespace Badge {
     @property({ type: String }) tabIndexing = "";
     @property({ type: String }) ariaHiddenSplits = "";
 
-    renderBgColor = () => {
-      return this.bgColor ? `background-color: ${this.bgColor};` : nothing;
-    };
-    renderTextColor = () => {
-      return this.textColor ? `color: ${this.textColor};` : nothing;
-    };
-    renderHeight = () => {
-      return this.height ? `height: ${this.height};` : nothing;
-    };
-    renderWidth = () => {
-      return this.width ? `width: ${this.width};` : nothing;
-    };
+    get renderBgColor() {
+      return this.bgColor ? `background-color: ${this.bgColor};` : "";
+    }
+
+    get renderTextColor() {
+      return this.textColor ? `color: ${this.textColor};` : "";
+    }
+
+    get renderHeight() {
+      return this.height ? `height: ${this.height};` : "";
+    }
+
+    get renderWidth() {
+      return this.width ? `width: ${this.width};` : "";
+    }
 
     getStyles = () => {
       if (this.bgColor || this.textColor || this.height || this.width) {
         return html`
           <style>
             :host .md-badge {
-              ${this.renderBgColor()};
-              ${this.renderTextColor()};
-              ${this.renderHeight()};
-              ${this.renderWidth()};
+              ${this.renderBgColor};
+              ${this.renderTextColor};
+              ${this.renderHeight};
+              ${this.renderWidth};
             }
           </style>
         `;
-      } else return nothing;
+      } else return "";
     };
 
     static get styles() {
@@ -95,7 +98,7 @@ export namespace Badge {
       return html`
         ${this.getStyles()}
         <span
-          tabindex=${this.tabIndexing}
+          tabindex=${ifDefined(Number(this.tabIndexing))}
           part="badge"
           class="md-badge ${classMap(classNamesInfo)}"
           aria-label=${this.ariaLabel}

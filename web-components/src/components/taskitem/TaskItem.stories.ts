@@ -8,17 +8,14 @@
 
 import "@/components/badge/Badge";
 import "@/components/taskitem/TaskItem";
-import { ThemeNameValues } from "@/components/theme/Theme";
 import { action } from "@storybook/addon-actions";
 import { Args } from "@storybook/web-components";
-import { html } from "lit-element";
+import { html } from "lit";
 
 export default {
   title: "Components/Task Item",
   component: "md-task-item",
   argTypes: {
-    theme: { control: { type: "select", options: ThemeNameValues }, defaultValue: "lumos" },
-    darkTheme: { control: "boolean" },
     title: { control: "text", defaultValue: "Mihael Varificantare" },
     quantity: { control: "number", defaultValue: 12 },
     mediaType: { control: "text", defaultValue: "voice" },

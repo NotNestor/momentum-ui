@@ -12,16 +12,16 @@ import { Args, Meta, StoryObj } from "@storybook/web-components";
 import { html } from "lit";
 
 const render = (args: Args) => html`
-    <md-button-group ?disabled=${args.disabled}>
-      <button slot="button" type="button">
-        <md-icon name="table-bold" size="16" iconSet="momentumDesign"></md-icon>
-      </button>
-      <button slot="button" type="button">
-        <md-icon name="analysis-bold" size="16" iconSet="momentumDesign"></md-icon>
-      </button>
-      <button slot="button" type="button">Option A</button>
-      <button slot="button" type="button">Option B</button>
-    </md-button-group>
+  <md-button-group ?disabled=${args.disabled}>
+    <button slot="button" type="button">
+      <md-icon name="table-bold" size="16" iconSet="momentumDesign"></md-icon>
+    </button>
+    <button slot="button" type="button">
+      <md-icon name="analysis-bold" size="16" iconSet="momentumDesign"></md-icon>
+    </button>
+    <button slot="button" type="button">Option A</button>
+    <button slot="button" type="button">Option B</button>
+  </md-button-group>
 `;
 
 export const ButtonGroup: StoryObj = {
@@ -34,8 +34,7 @@ export const ButtonGroup: StoryObj = {
 const meta: Meta = {
   title: "Components/Button Group",
   component: "md-button-group",
-  argTypes: {
-  },
+  argTypes: {},
   parameters: {
     a11y: {
       element: "md-button-group"

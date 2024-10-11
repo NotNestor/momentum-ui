@@ -42,7 +42,7 @@ const meta: Meta = {
   argTypes: {
     checked: { control: "boolean" },
     visible: { control: "boolean" },
-    alignment: { control: { type: "select", options: ["leading", "trailing", "top", "bottom"] } }
+    alignment: { control: { type: "select" }, options: ["leading", "trailing", "top", "bottom"] }
   },
   parameters: {
     a11y: {

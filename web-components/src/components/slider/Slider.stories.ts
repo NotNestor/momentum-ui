@@ -8,8 +8,8 @@
 
 import "@/components/slider/Slider";
 import { action } from "@storybook/addon-actions";
-import { Args } from "@storybook/web-components";
-import { html } from "lit-element";
+import { Args, StoryObj } from "@storybook/web-components";
+import { html } from "lit";
 
 export default {
   title: "Components/Slider",
@@ -32,7 +32,7 @@ export default {
   }
 };
 
-export const Slider = (args: Args) => {
+const render = (args: Args) => {
   return html`
     <md-slider
       @slider-change=${action("change")}
@@ -46,4 +46,17 @@ export const Slider = (args: Args) => {
       ?hide-value=${args.hideValue}
     ></md-slider>
   `;
+};
+
+export const Slider: StoryObj = {
+  args: {
+    disabled: false,
+    step: 1,
+    min: 0,
+    max: 10,
+    now: 4,
+    nopointer: false,
+    hideValue: false
+  },
+  render: render
 };
