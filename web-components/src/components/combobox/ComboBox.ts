@@ -13,7 +13,7 @@ import { FocusMixin } from "@/mixins";
 import { customElementWithCheck } from "@/mixins/CustomElementCheck";
 import { debounce, findHighlight } from "@/utils/helpers";
 import reset from "@/wc_scss/reset.scss";
-import { virtualize } from "@lit-labs/virtualizer/virtualize.js";
+import { virtualize, virtualizerRef } from "@lit-labs/virtualizer/virtualize.js";
 import { LitElement, PropertyValues, html } from "lit";
 import { property, query, queryAll, state } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
@@ -150,6 +150,12 @@ export namespace ComboBox {
         if (newList) {
           newList?.toggleAttribute("focused", true);
         }
+
+        this.virtualizer?.[virtualizerRef]?.element(index).scrollIntoView({
+          block: "center",
+          behavior: "smooth"
+        });
+        
       } else {
         if (this.lists) {
           const oldFocusedOption = this.lists[oldIndex];
@@ -1218,6 +1224,7 @@ export namespace ComboBox {
           break;
         case Key.ArrowDown:
           {
+            event.stopPropagation();
             if (this.filteredOptions.length === 0) {
               return;
             }
@@ -1529,6 +1536,7 @@ export namespace ComboBox {
     }
 
     rangeChanged() {
+      console.log("range changed");
       this.updateFocusedIndex(this.focusedIndex);
       this.checkSelectedOptions();
       this.resizeListbox();
