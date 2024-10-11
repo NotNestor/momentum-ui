@@ -9,7 +9,7 @@
 /** This mixin provide a different way to show what element is focused.
  * (https://html.spec.whatwg.org/multipage/interaction.html#focus-management-apis)
  * By hiding the native browser outline from component style, we can manage alternative focusing style.
- * Using keyboard this mixin toggle `focus-visible` attribute on compoenent root to show focus ring.
+ * Using keyboard this mixin toggle `focus-visible` attribute on component root to show focus ring.
  * This mixin handle `focusin` and `focusout` events because due to this specification
  * (https://w3c.github.io/uievents/#event-type-focusin) this events are composable
  * and they can be handled by one of the target’s ancestors, which can help us in Shadow DOM event propagation case.

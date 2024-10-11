@@ -34,7 +34,7 @@ describe("Draggable Component", () => {
   });
 
   test("should create sortable instance with options", async () => {
-    expect(mockedSortable.create.mock.calls).toHaveLength(2);
+    expect(mockedSortable.create.mock.calls).toHaveLength(3);
     const parameters = mockedSortable.create.mock.calls[0];
     expect(parameters[0]).toBe(element);
   });
