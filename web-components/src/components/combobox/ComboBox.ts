@@ -1536,7 +1536,6 @@ export namespace ComboBox {
     }
 
     rangeChanged() {
-      console.log("range changed");
       this.updateFocusedIndex(this.focusedIndex);
       this.checkSelectedOptions();
       this.resizeListbox();
