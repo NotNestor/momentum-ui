@@ -41,7 +41,7 @@ export class FormSandbox extends LitElement {
   }
 
   disconnectedCallback() {
-    this.disconnectedCallback();
+    super.disconnectedCallback();
     this.removeEventListener("submit", this.handleFormSubmit);
   }
 

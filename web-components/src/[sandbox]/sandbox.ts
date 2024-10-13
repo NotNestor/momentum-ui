@@ -102,6 +102,10 @@ export class Sandbox extends LitElement {
     }
   }
 
+  protected firstUpdated(_changedProperties: PropertyValues): void {
+    super.firstUpdated(_changedProperties);
+  }
+
   loadSettingsFromStorage() {
     const storedTheme = localStorage.getItem("theme");
     if (storedTheme) {
@@ -213,21 +217,35 @@ export class Sandbox extends LitElement {
     return [reset, styles];
   }
 
-  getTabTemplate(componentName: string, component: string, componentPanelTemplate: TemplateResult<1>) {
+  getTabTemplate(
+    componentName: string,
+    component: string,
+    componentSassStatsName: string,
+    componentPanelTemplate: TemplateResult<1>
+  ) {
     return html`
       <md-tab slot="tab" name=${componentName}>
         <span>${component}</span>
       </md-tab>
-      ${this.getComponentTabPanelTemplate(component, componentName, componentPanelTemplate)}
+      ${this.getComponentTabPanelTemplate(componentName, component, componentSassStatsName, componentPanelTemplate)}
     `;
   }
 
-  getComponentTabPanelTemplate(component: string, componentName: string, componentPanelTemplate: TemplateResult<1>) {
+  getComponentTabPanelTemplate(
+    componentName: string,
+    component: string,
+    componentSassStatsName: string,
+    componentPanelTemplate: TemplateResult<1>
+  ) {
     return html`
       <md-tab-panel slot="panel">
         <div class="container" aria-label=${component}>
           <h2>${componentName}</h2>
-          <sass-stats component=${component.slice(3)}> ${componentPanelTemplate} </sass-stats>
+          ${componentName === this.selectedTab
+            ? componentSassStatsName.length !== 0
+              ? html`<sass-stats component=${componentSassStatsName}> ${componentPanelTemplate} </sass-stats>`
+              : html`${componentPanelTemplate}`
+            : html``}
         </div>
       </md-tab-panel>
     `;
@@ -239,58 +257,58 @@ export class Sandbox extends LitElement {
         <div class="header-controls">${this.themeToggle()} ${this.containerColorOptionTemplate()}</div>
 
         <md-tabs direction="vertical" class="explorer" persist-selection tabs-id="explorer">
-          ${this.getTabTemplate("Accordion", "md-accordion", accordionTemplate)}
-          ${this.getTabTemplate("Alert Banner", "md-alert-banner", alertBannerTemplate)};
-          ${this.getTabTemplate("Alert", "md-alert", alertTemplate)}
-          ${this.getTabTemplate("Audio Player", "md-audio-player", audioPlayerTemplate)}
-          ${this.getTabTemplate("Avatar", "md-avatar", avatarTemplate)}
-          ${this.getTabTemplate("Badge", "md-badge", badgeTemplate)}
-          ${this.getTabTemplate("Breadcrumb", "md-breadcrumb", breadcrumbTemplate)}
-          ${this.getTabTemplate("Button", "md-button", buttonTemplate)}
-          ${this.getTabTemplate("Button Group", "md-button-group", buttonGroupTemplate)}
-          ${this.getTabTemplate("Card", "md-card", cardTemplate)}
-          ${this.getTabTemplate("Card - AI", "md-card-ai", cardAiTemplate)}
-          ${this.getTabTemplate("Chat Message", "md-chat-message", chatMessageTemplate)}
-          ${this.getTabTemplate("Checkbox", "md-checkbox", checkboxTemplate)}
-          ${this.getTabTemplate("Chip", "md-chip", chipTemplate)}
-          ${this.getTabTemplate("Coachmark", "md-coachmark", coachTemplate)}
-          ${this.getTabTemplate("Code Editor", "md-code-editor", codeEditorTemplate)}
-          ${this.getTabTemplate("Combo Box", "md-combobox", comboBoxTemplate)}
-          ${this.getTabTemplate("Datepicker", "md-datepicker", datePickerTemplate)}
-          ${this.getTabTemplate("Date Range Picker", "md-date-range-picker", dateRangePickerTemplate)}
-          ${this.getTabTemplate("Date Time Picker", "md-date-time-picker", dateTimePickerTemplate)}
-          ${this.getTabTemplate("Dropdown", "md-dropdown", dropdownTemplate)}
-          ${this.getTabTemplate("Draggable", "md-draggable", draggableTemplate)}
-          ${this.getTabTemplate("Editable Field", "md-editable-field", editableField)}
-          ${this.getTabTemplate("Favorite", "md-favorite", favoriteTemplate)}
-          ${this.getTabTemplate("Floating Modal", "md-floating-modal", floatingModalTemplate)}
-          ${this.getTabTemplate("Form", "md-form", formTemplate)}
-          ${this.getTabTemplate("Grabber", "md-grabber", grabberTemplate)}
-          ${this.getTabTemplate("Icon", "md-icon", iconTemplate)}
-          ${this.getTabTemplate("Input", "md-input", inputTemplate)}
-          ${this.getTabTemplate("Input File", "md-input-file", inputFileTemplate)}
-          ${this.getTabTemplate("Label", "md-label", labelTemplate)}
-          ${this.getTabTemplate("Link", "md-link", linkTemplate)}
-          ${this.getTabTemplate("List", "md-list", listTemplate)}
-          ${this.getTabTemplate("Loading", "md-loading", loadingTemplate)}
-          ${this.getTabTemplate("Meeting Alert", "md-meeting-alert", meetingAlertTemplate)}
-          ${this.getTabTemplate("Menu", "md-menu", menuItemTemplate)}
-          ${this.getTabTemplate("Menu Overlay", "md-menu-overlay", menuOverlayTemplate)}
-          ${this.getTabTemplate("Modal", "md-modal", modalTemplate)}
-          ${this.getTabTemplate("Pagination", "md-pagination", paginationTemplate)}
-          ${this.getTabTemplate("Phone Input", "md-phone-input", phoneInputTemplate)}
-          ${this.getTabTemplate("Progress Bar", "md-progress-bar", progressBarTemplate)}
-          ${this.getTabTemplate("Radio", "md-radio", radioGroupTemplate)}
-          ${this.getTabTemplate("Slider", "md-slider", sliderTemplate)}
-          ${this.getTabTemplate("Spinner", "md-spinner", spinnerTemplate)}
-          ${this.getTabTemplate("Table", "md-table", tableTemplate)}
-          ${this.getTabTemplate("Table Advanced", "md-table-advanced", tableAdvancedTemplate)}
-          ${this.getTabTemplate("Tabs", "md-tabs", tabsTemplate)}
-          ${this.getTabTemplate("Task Item", "md-task-item", taskItemTemplate)}
-          ${this.getTabTemplate("Timepicker", "md-timepicker", timePickerTemplate)}
-          ${this.getTabTemplate("Toggle Switch", "md-toggle-switch", toggleSwitchTemplate)}
-          ${this.getTabTemplate("Tooltip", "md-tooltip", tooltipTemplate)}
-          ${this.getTabTemplate("Colors", "Colors", colorTableTemplate)}
+          ${this.getTabTemplate("Accordion", "md-accordion", "accordion", accordionTemplate)}
+          ${this.getTabTemplate("Alert Banner", "md-alert-banner", "alert-banner", alertBannerTemplate)};
+          ${this.getTabTemplate("Alert", "md-alert", "alert", alertTemplate)}
+          ${this.getTabTemplate("Audio Player", "md-audio-player", "audio-player", audioPlayerTemplate)}
+          ${this.getTabTemplate("Avatar", "md-avatar", "avatar", avatarTemplate)}
+          ${this.getTabTemplate("Badge", "md-badge", "badge", badgeTemplate)}
+          ${this.getTabTemplate("Breadcrumb", "md-breadcrumb", "breadcrumb", breadcrumbTemplate)}
+          ${this.getTabTemplate("Button", "md-button", "button", buttonTemplate)}
+          ${this.getTabTemplate("Button Group", "md-button-group", "button-group", buttonGroupTemplate)}
+          ${this.getTabTemplate("Card", "md-card", "card", cardTemplate)}
+          ${this.getTabTemplate("Card - AI", "md-card-ai", "card-ai", cardAiTemplate)}
+          ${this.getTabTemplate("Chat Message", "md-chat-message", "chat-message", chatMessageTemplate)}
+          ${this.getTabTemplate("Checkbox", "md-checkbox", "checkbox", checkboxTemplate)}
+          ${this.getTabTemplate("Chip", "md-chip", "chip", chipTemplate)}
+          ${this.getTabTemplate("Coachmark", "md-coachmark", "coachmark", coachTemplate)}
+          ${this.getTabTemplate("Code Editor", "md-code-editor", "code-editor", codeEditorTemplate)}
+          ${this.getTabTemplate("Combo Box", "md-combobox", "combobox", comboBoxTemplate)}
+          ${this.getTabTemplate("Datepicker", "md-datepicker", "datepicker", datePickerTemplate)}
+          ${this.getTabTemplate("Date Range Picker", "md-date-range-picker", "datepicker", dateRangePickerTemplate)}
+          ${this.getTabTemplate("Date Time Picker", "md-date-time-picker", "date-time-picker", dateTimePickerTemplate)}
+          ${this.getTabTemplate("Dropdown", "md-dropdown", "dropdown", dropdownTemplate)}
+          ${this.getTabTemplate("Draggable", "md-draggable", "draggable", draggableTemplate)}
+          ${this.getTabTemplate("Editable Field", "md-editable-field", "editable-textfield", editableField)}
+          ${this.getTabTemplate("Favorite", "md-favorite", "favorite", favoriteTemplate)}
+          ${this.getTabTemplate("Floating Modal", "md-floating-modal", "floating-modal", floatingModalTemplate)}
+          ${this.getTabTemplate("Form", "md-form", "", formTemplate)}
+          ${this.getTabTemplate("Grabber", "md-grabber", "grabber", grabberTemplate)}
+          ${this.getTabTemplate("Icon", "md-icon", "icon", iconTemplate)}
+          ${this.getTabTemplate("Input", "md-input", "input", inputTemplate)}
+          ${this.getTabTemplate("Input File", "md-input-file", "input-file", inputFileTemplate)}
+          ${this.getTabTemplate("Label", "md-label", "label", labelTemplate)}
+          ${this.getTabTemplate("Link", "md-link", "link", linkTemplate)}
+          ${this.getTabTemplate("List", "md-list", "list", listTemplate)}
+          ${this.getTabTemplate("Loading", "md-loading", "loading", loadingTemplate)}
+          ${this.getTabTemplate("Meeting Alert", "md-meeting-alert", "meeting-alert", meetingAlertTemplate)}
+          ${this.getTabTemplate("Menu", "md-menu", "menu", menuItemTemplate)}
+          ${this.getTabTemplate("Menu Overlay", "md-menu-overlay", "menu-overlay", menuOverlayTemplate)}
+          ${this.getTabTemplate("Modal", "md-modal", "modal", modalTemplate)}
+          ${this.getTabTemplate("Pagination", "md-pagination", "pagination", paginationTemplate)}
+          ${this.getTabTemplate("Phone Input", "md-phone-input", "phone-input", phoneInputTemplate)}
+          ${this.getTabTemplate("Progress Bar", "md-progress-bar", "progress-bar", progressBarTemplate)}
+          ${this.getTabTemplate("Radio", "md-radio", "radio", radioGroupTemplate)}
+          ${this.getTabTemplate("Slider", "md-slider", "slider", sliderTemplate)}
+          ${this.getTabTemplate("Spinner", "md-spinner", "spinner", spinnerTemplate)}
+          ${this.getTabTemplate("Table", "md-table", "table", tableTemplate)}
+          ${this.getTabTemplate("Table Advanced", "md-table-advanced", "table-advanced", tableAdvancedTemplate)}
+          ${this.getTabTemplate("Tabs", "md-tabs", "tabs", tabsTemplate)}
+          ${this.getTabTemplate("Task Item", "md-task-item", "taskitem", taskItemTemplate)}
+          ${this.getTabTemplate("Timepicker", "md-timepicker", "timepicker", timePickerTemplate)}
+          ${this.getTabTemplate("Toggle Switch", "md-toggle-switch", "toggle-switch", toggleSwitchTemplate)}
+          ${this.getTabTemplate("Tooltip", "md-tooltip", "tooltip", tooltipTemplate)}
+          ${this.getTabTemplate("Colors", "Colors", "", colorTableTemplate)}
         </md-tabs>
       </md-theme>
     `;

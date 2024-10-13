@@ -151,11 +151,16 @@ export namespace ComboBox {
           newList?.toggleAttribute("focused", true);
         }
 
-        this.virtualizer?.[virtualizerRef]?.element(index).scrollIntoView({
-          block: "center",
-          behavior: "smooth"
-        });
-        
+        const element = this.virtualizer?.[virtualizerRef]?.element?.(index);
+        if (element) {
+          try {
+            element.scrollIntoView({
+              block: index === -1 ? "start" : "center"
+            });
+          } catch (e) {
+            console.warn("Error while calling scrollIntoView");
+          }
+        }
       } else {
         if (this.lists) {
           const oldFocusedOption = this.lists[oldIndex];

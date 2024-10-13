@@ -53,15 +53,24 @@ export class DefaultTableAdvanced extends LitElement {
       }
     };
 
+    const temp2Content = html`
+      ${this.litProp}
+      <span class="sp"></span>
+      <button @click=${() => console.log("will not work")}>BTN</button>
+    `;
+
+    const templateElement = document.createElement("template");
+    templateElement.id = "tmp2";
+
+    // Set the innerHTML of the template element
+    templateElement.innerHTML = temp2Content.strings.join("");
+
+    // Append the template element to the desired parent
+    document.body.appendChild(templateElement);
+
     return html`
       <md-table-advanced .config=${CONF} .data=${DATA}>
         <template id="tmp1"> [OK] </template>
-
-        <template id="tmp2">
-          ${this.litProp}
-          <span class="sp"></span>
-          <button @click=${() => console.log("will not work")}>BTN</button>
-        </template>
       </md-table-advanced>
     `;
   }
