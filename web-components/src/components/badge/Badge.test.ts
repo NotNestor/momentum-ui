@@ -1,6 +1,5 @@
 import "@/components/icon/Icon";
 import { fixture, fixtureCleanup, html } from "@open-wc/testing-helpers";
-import { nothing } from "lit/html.js";
 import "./Badge";
 import { Badge } from "./Badge";
 
@@ -96,6 +95,6 @@ describe("Badge component", () => {
     expect(component.textColor).toBeFalsy();
     expect(component.height).toBeFalsy();
     expect(component.width).toBeFalsy();
-    expect(component.getStyles()).toBe(nothing);
+    expect(component.getStyles()).toBe("");
   });
 });
