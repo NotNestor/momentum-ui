@@ -9,20 +9,20 @@
 import "@/components/badge/Badge";
 import "@/components/taskitem/TaskItem";
 import { action } from "@storybook/addon-actions";
-import { Args } from "@storybook/web-components";
+import { Args, StoryObj } from "@storybook/web-components";
 import { html } from "lit";
 
 export default {
   title: "Components/Task Item",
   component: "md-task-item",
   argTypes: {
-    title: { control: "text", defaultValue: "Mihael Varificantare" },
-    quantity: { control: "number", defaultValue: 12 },
-    mediaType: { control: "text", defaultValue: "voice" },
-    status: { control: "text", defaultValue: "conference" },
-    queue: { control: "text", defaultValue: "IRV_quelle_11" },
-    message: { control: "text", defaultValue: "" },
-    time: { control: "text", defaultValue: "00:00" },
+    title: { control: "text" },
+    quantity: { control: "number" },
+    mediaType: { control: "text" },
+    status: { control: "text" },
+    queue: { control: "text" },
+    message: { control: "text" },
+    time: { control: "text" },
     selected: { table: { disable: true } },
     renderTaskType: { table: { disable: true } },
     renderStatus: { table: { disable: true } },
@@ -37,7 +37,7 @@ export default {
   }
 };
 
-export const TaskItem = (args: Args) => {
+const render = (args: Args) => {
   return html`
     <md-task-item
       mediaType="${args.mediaType}"
@@ -55,4 +55,16 @@ export const TaskItem = (args: Args) => {
       <div>${args.time}</div>
     </md-task-item>
   `;
+};
+
+export const TaskItem: StoryObj = {
+  args: {
+    title: "Mihael Varificantare",
+    quantitiy: 12,
+    mediaType: "voice",
+    status: "conference",
+    queue: "IRV_quelle_11",
+    time: "00:00"
+  },
+  render: render
 };
