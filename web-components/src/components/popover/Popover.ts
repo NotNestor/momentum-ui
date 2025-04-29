@@ -11,7 +11,6 @@ import "@/components/icon/Icon";
 import "@/components/portal/Portal";
 import { Key } from "@/constants";
 import { customElementWithCheck } from "@/mixins/CustomElementCheck";
-import { FocusTrapMixin } from "@/mixins/FocusTrapMixin";
 import { debounce } from "@/utils/helpers";
 import { isActionKey } from "@/utils/keyboard";
 import { Placement } from "@popperjs/core/lib";
@@ -42,7 +41,7 @@ export namespace Popover {
    * @fires popover-open-changed - Fired when the popover is opened or closed.
    */
   @customElementWithCheck("md-popover")
-  export class ELEMENT extends FocusTrapMixin(LitElement) {
+  export class ELEMENT extends LitElement {
     @property({ type: Boolean, attribute: "use-protal" })
     usePortal = false;
 
@@ -51,12 +50,6 @@ export namespace Popover {
 
     @property({ type: Object })
     contentTemplate: TemplateResult | null = null;
-
-    @internalProperty()
-    portalPopoverContentComponent: PopoverContent | null = null;
-
-    @internalProperty()
-    private activePopoverElement: HTMLElement | null | undefined = null;
 
     /**
      * The placement of the popover relative to the trigger element.
@@ -128,9 +121,6 @@ export namespace Popover {
     @property({ type: Boolean })
     interactive = false;
 
-    //Override FocusTrap Mixin property
-    shouldWrapFocus = () => this.interactive;
-
     /**
      * The role attribute for the popover.
      *
@@ -176,7 +166,10 @@ export namespace Popover {
     triggerSlot!: HTMLSlotElement;
 
     @query("md-popover-content")
-    popoverContentComponent!: HTMLElement;
+    private readonly popoverContentComponent?: PopoverContent;
+
+    @internalProperty()
+    private portalPopoverContentComponent: PopoverContent | null | undefined = null;
 
     /**
      * The popover container element.
@@ -186,13 +179,20 @@ export namespace Popover {
      *
      * @type {HTMLDivElement}
      */
-
     private get popoverContainer(): HTMLDivElement {
-      return this.popoverContentComponent.shadowRoot?.querySelector(".popover-container") as HTMLDivElement;
+      if (this.usePortal) {
+        return this.portalPopoverContentComponent?.popoverContainer as HTMLDivElement;
+      }
+
+      return this.popoverContentComponent?.popoverContainer as HTMLDivElement;
     }
 
     private get popoverArrow(): HTMLDivElement {
-      return this.popoverContentComponent.shadowRoot?.querySelector(".popover-arrow") as HTMLDivElement;
+      if (this.usePortal) {
+        return this.portalPopoverContentComponent?.popoverArrow as HTMLDivElement;
+      }
+
+      return this.popoverContentComponent?.popoverArrow as HTMLDivElement;
     }
 
     /**
@@ -272,10 +272,11 @@ export namespace Popover {
         }
       }
 
-      if (this.activePopoverElement) {
+      const portalPopover = this.portalPopoverContentComponent?.popoverContainer;
+      if (portalPopover) {
         if (this.trigger?.includes("mouseenter")) {
-          this.activePopoverElement.removeEventListener("mouseenter", this.onMouseEnteredTriggerOrPopup);
-          this.activePopoverElement.removeEventListener("mouseleave", this.onMouseLeaveTriggerOrPopup);
+          portalPopover.removeEventListener("mouseenter", this.onMouseEnteredTriggerOrPopup);
+          portalPopover.removeEventListener("mouseleave", this.onMouseLeaveTriggerOrPopup);
         }
       }
     }
@@ -305,18 +306,29 @@ export namespace Popover {
     }
 
     onOutsideOverlayClick = (event: MouseEvent) => {
-      //Should there be an extra prop to not close on outside clicks
       if (this.trigger?.includes("manual")) {
-        //Consumer controls closing of popover
-        //so do not close on outside clicks
         return;
       }
 
-      let insideMenuClick = false;
       const path = event.composedPath();
       if (path.length) {
-        insideMenuClick = !!path.find((element) => element === this);
-        if (!insideMenuClick) {
+        // Check if the click is inside the main component
+        const isInsideMainComponent = !!path.find((element) => element === this);
+
+        // Check if the click is inside the portal content
+        const isInsidePortalContent =
+          this.usePortal &&
+          this.portalPopoverContentComponent &&
+          !!path.find((element) => {
+            // Check if the element is the portal content or a child of it
+            return (
+              element === this.portalPopoverContentComponent ||
+              (element instanceof Node && this.portalPopoverContentComponent?.contains(element))
+            );
+          });
+
+        // Keep the popover open if the click is inside either component
+        if (!isInsideMainComponent && !isInsidePortalContent) {
           this.isOpen = false;
         }
       }
@@ -343,7 +355,7 @@ export namespace Popover {
       event.preventDefault();
       this.isOpen = false;
       await this.updateComplete;
-      this.focusOnTrigger();
+      this.onFocusTriggerRequest();
     };
 
     private handleTriggerElementSlotChange() {
@@ -369,7 +381,7 @@ export namespace Popover {
         if (this.isOpen) {
           this.isOpen = false;
           await this.updateComplete;
-          this.focusOnTrigger();
+          this.onFocusTriggerRequest();
         }
       }
     };
@@ -430,23 +442,13 @@ export namespace Popover {
       }
     }
 
-    private focusInsideOverlay() {
-      if (this.focusableElements) {
-        if (this.focusableElements.length > 1) {
-          this.setInitialFocus?.(1);
-        } else if (this.focusableElements.length) {
-          this.setInitialFocus?.();
-        }
-      }
-    }
-
-    private async focusOnTrigger() {
+    private readonly onFocusTriggerRequest = () => {
       requestAnimationFrame(() => {
-        if (this.focusableElements?.length) {
-          this.focusableElements[0].focus();
+        if (this.triggerElement) {
+          this.triggerElement.focus();
         }
       });
-    }
+    };
 
     private toggleOverlay(): void {
       if (this.triggerElement?.hasAttribute("disabled")) {
@@ -458,9 +460,11 @@ export namespace Popover {
 
     private async handleCreatePopperFirstUpdate() {
       if (this.isOpen && this.interactive) {
-        this.setFocusableElements?.();
-        await this.updateComplete;
-        this.focusInsideOverlay();
+        if (!this.usePortal && this.popoverContentComponent) {
+          this.popoverContentComponent.setupFocus();
+        } else if (this.usePortal && this.portalPopoverContentComponent) {
+          this.portalPopoverContentComponent.setupFocus();
+        }
       }
     }
 
@@ -489,9 +493,9 @@ export namespace Popover {
           {
             name: "offset",
             options: {
-              offset: (({ placement, reference }) => {
+              offset: (({ placement }) => {
                 if (placement === "left" || placement === "right") {
-                  return [reference.height + reference.y + this.offsetDistance, ARROW_HEIGHT];
+                  return [0, ARROW_HEIGHT];
                 } else {
                   return [0, this.showArrow ? ARROW_HEIGHT + this.offsetDistance : this.offsetDistance];
                 }
@@ -560,14 +564,16 @@ export namespace Popover {
         document.addEventListener("keydown", this.onOutsideOverlayKeydown);
 
         if (this.interactive) {
-          this.activateFocusTrap?.();
+          if (!this.usePortal && this.popoverContentComponent) {
+            this.popoverContentComponent.setupFocus();
+          }
         }
 
         this.triggerElement?.setAttribute("aria-expanded", "true");
         this.popoverContainer?.setAttribute("data-show", "");
       } else {
         this.destroyInstance();
-        this.activePopoverElement = null;
+        this.portalPopoverContentComponent = null;
 
         window.removeEventListener("blur", this.onWindowBlurEvent);
         document.removeEventListener("click", this.onOutsideOverlayClick);
@@ -575,7 +581,14 @@ export namespace Popover {
 
         this.dispatchPopoverIsOpenChanged(newValue);
 
-        this.deactivateFocusTrap?.();
+        if (this.interactive) {
+          if (!this.usePortal && this.popoverContentComponent) {
+            // For non-portal case, tell the content component to cleanup focus
+            this.popoverContentComponent.cleanupFocus();
+          }
+          // For portal case, the component will be destroyed anyway
+        }
+
         this.triggerElement?.removeAttribute("aria-expanded");
         this.popoverContainer?.removeAttribute("data-show");
       }
@@ -588,68 +601,28 @@ export namespace Popover {
       this.portalPopoverContentComponent = (container as HTMLElement).querySelector<PopoverContent>(
         "md-popover-content"
       );
-
-      this.activePopoverElement = this.portalPopoverContentComponent?.popoverContainer;
+      const popContainer = this.portalPopoverContentComponent?.popoverContainer;
 
       // Set up event listeners for hover behavior
-      if (this.trigger?.includes("mouseenter") && this.activePopoverElement) {
-        this.activePopoverElement.addEventListener("mouseenter", this.onMouseEnteredTriggerOrPopup);
-        this.activePopoverElement.addEventListener("mouseleave", this.onMouseLeaveTriggerOrPopup);
+      if (this.trigger?.includes("mouseenter") && popContainer) {
+        popContainer.addEventListener("mouseenter", this.onMouseEnteredTriggerOrPopup);
+        popContainer.addEventListener("mouseleave", this.onMouseLeaveTriggerOrPopup);
       }
 
       // Show the popover
-      this.activePopoverElement?.setAttribute("data-show", "");
+      this.portalPopoverContentComponent?.setIsOpen(true);
+
+      if (this.interactive && this.portalPopoverContentComponent) {
+        this.portalPopoverContentComponent.setupFocus();
+      }
 
       // Create popper instance with the portal element
-      this.createPortalInstance();
-    }
 
-    private createPortalInstance() {
-      if (!this.triggerElement || !this.activePopoverElement) return;
-      const theArrow = this.portalPopoverContentComponent?.popoverArrow;
+      if (!this.triggerElement) {
+        return;
+      }
 
-      this.popperInstance = createPopper(this.triggerElement, this.activePopoverElement, {
-        placement: this.placement,
-        strategy: this.positioningStrategy,
-        modifiers: [
-          ...defaultModifiers,
-          flip,
-          offset,
-          preventOverflow,
-          arrow,
-          {
-            name: "preventOverflow",
-            options: {
-              padding: 16
-            }
-          },
-          {
-            name: "offset",
-            options: {
-              offset: (({ placement }) => {
-                if (placement === "left" || placement === "right") {
-                  return [this.offsetDistance, ARROW_HEIGHT];
-                } else {
-                  return [0, this.showArrow ? ARROW_HEIGHT + this.offsetDistance : this.offsetDistance];
-                }
-              }) as OffsetsFunction
-            }
-          },
-          {
-            name: "arrow",
-            options: {
-              element: theArrow,
-              padding: ARROW_HEIGHT
-            }
-          },
-          {
-            name: "computeStyles",
-            options: {
-              adaptive: false
-            }
-          }
-        ]
-      });
+      this.createPopoverInstance(this.triggerElement, this.popoverContainer);
     }
 
     private dispatchPopoverIsOpenChanged(isOpen: boolean) {
@@ -674,6 +647,7 @@ export namespace Popover {
           .contentTemplate=${this.contentTemplate}
           @popover-close=${() => (this.isOpen = false)}
           @popover-content-changed=${this.onContentSlotChanged}
+          @popover-focus-trigger=${this.onFocusTriggerRequest}
         >
           <slot></slot>
         </md-popover-content>

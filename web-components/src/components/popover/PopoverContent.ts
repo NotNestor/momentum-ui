@@ -1,5 +1,6 @@
 import "@/components/button/Button";
 import "@/components/icon/Icon";
+import { FocusTrapMixin } from "@/mixins";
 import { customElementWithCheck } from "@/mixins/CustomElementCheck";
 import { html, LitElement, property, query, TemplateResult } from "lit-element";
 import { nothing } from "lit-html";
@@ -9,7 +10,7 @@ import { PopoverRoleType } from "./Popover.types";
 import styles from "./scss/module.scss";
 
 @customElementWithCheck("md-popover-content")
-export class PopoverContent extends LitElement {
+export class PopoverContent extends FocusTrapMixin(LitElement) {
   /**
    * Indicates whether the arrow should be shown on the popover.
    */
@@ -33,6 +34,8 @@ export class PopoverContent extends LitElement {
    */
   @property({ type: Boolean })
   interactive = false;
+
+  shouldWrapFocus = () => this.interactive;
 
   /**
    * The accessible label for the popover.
@@ -72,6 +75,37 @@ export class PopoverContent extends LitElement {
     } else {
       this.popoverContainer?.removeAttribute("data-show");
     }
+  }
+
+  setupFocus() {
+    if (this.interactive) {
+      this.setFocusableElements?.();
+      this.focusInsideOverlay();
+      this.activateFocusTrap?.();
+    }
+  }
+
+  cleanupFocus() {
+    this.deactivateFocusTrap?.();
+  }
+
+  private focusInsideOverlay() {
+    if (this.focusableElements) {
+      if (this.focusableElements.length > 1) {
+        this.setInitialFocus?.(1);
+      } else if (this.focusableElements.length) {
+        this.setInitialFocus?.();
+      }
+    }
+  }
+
+  requestTriggerFocus() {
+    this.dispatchEvent(
+      new CustomEvent("popover-focus-trigger", {
+        bubbles: true,
+        composed: true
+      })
+    );
   }
 
   static get styles() {

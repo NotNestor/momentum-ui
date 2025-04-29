@@ -186,8 +186,7 @@ export class PopoverTemplateSandbox extends LitElement {
         <md-tooltip placement="bottom" message="Sort" ?disabled=${this.isButtonWithTooltipPopoverOpen}>
           <md-popover
             placement="right"
-            trigger="manual"
-            is-open
+            trigger="click"
             interactive
             use-protal
             .contentTemplate=${this.sortTemplate}
