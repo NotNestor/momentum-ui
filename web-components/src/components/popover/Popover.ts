@@ -8,6 +8,7 @@
 
 import "@/components/button/Button";
 import "@/components/icon/Icon";
+import "@/components/portal/Portal";
 import { Key } from "@/constants";
 import { customElementWithCheck } from "@/mixins/CustomElementCheck";
 import { FocusTrapMixin } from "@/mixins/FocusTrapMixin";
@@ -20,11 +21,11 @@ import offset from "@popperjs/core/lib/modifiers/offset";
 import preventOverflow from "@popperjs/core/lib/modifiers/preventOverflow";
 import { createPopper, defaultModifiers, Instance, Rect } from "@popperjs/core/lib/popper-lite";
 import { html, internalProperty, LitElement, property, PropertyValues, query } from "lit-element";
-import { nothing } from "lit-html";
-import { classMap } from "lit-html/directives/class-map";
+import { nothing, TemplateResult } from "lit-html";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 import { ARROW_HEIGHT, PlacementType, PopoverRoleType, StrategyType } from "./Popover.types";
-import styles from "./scss/module.scss";
+import "./PopoverContent";
+import { type PopoverContent } from "./PopoverContent";
 
 type OffsetsFunction = ({
   popper,
@@ -42,6 +43,21 @@ export namespace Popover {
    */
   @customElementWithCheck("md-popover")
   export class ELEMENT extends FocusTrapMixin(LitElement) {
+    @property({ type: Boolean, attribute: "use-protal" })
+    usePortal = false;
+
+    @property({ type: Object })
+    portalTarget: HTMLElement | null = null;
+
+    @property({ type: Object })
+    contentTemplate: TemplateResult | null = null;
+
+    @internalProperty()
+    portalPopoverContentComponent: PopoverContent | null = null;
+
+    @internalProperty()
+    private activePopoverElement: HTMLElement | null | undefined = null;
+
     /**
      * The placement of the popover relative to the trigger element.
      *
@@ -159,6 +175,9 @@ export namespace Popover {
     @query('slot[name="triggerElement"]')
     triggerSlot!: HTMLSlotElement;
 
+    @query("md-popover-content")
+    popoverContentComponent!: HTMLElement;
+
     /**
      * The popover container element.
      *
@@ -167,19 +186,14 @@ export namespace Popover {
      *
      * @type {HTMLDivElement}
      */
-    @query(".popover-container")
-    popoverContainer!: HTMLDivElement;
 
-    /**
-     * The popover arrow element.
-     *
-     * This property is used to query the popover arrow element in the DOM.
-     * The popover arrow is the element that visually connects the popover to the trigger element.
-     *
-     * @type {HTMLDivElement}
-     */
-    @query(".popover-arrow")
-    popoverArrow!: HTMLDivElement;
+    private get popoverContainer(): HTMLDivElement {
+      return this.popoverContentComponent.shadowRoot?.querySelector(".popover-container") as HTMLDivElement;
+    }
+
+    private get popoverArrow(): HTMLDivElement {
+      return this.popoverContentComponent.shadowRoot?.querySelector(".popover-arrow") as HTMLDivElement;
+    }
 
     /**
      * The event that triggers the popover.
@@ -228,10 +242,6 @@ export namespace Popover {
     @internalProperty()
     private isMouseOver = false;
 
-    static get styles() {
-      return [styles];
-    }
-
     override connectedCallback(): void {
       super.connectedCallback();
     }
@@ -259,6 +269,13 @@ export namespace Popover {
         if (this.trigger?.includes("focus")) {
           this.triggerElement.removeEventListener("focusin", this.onFocusInTrigger);
           this.triggerElement.removeEventListener("focusout", this.onFocusOutTrigger);
+        }
+      }
+
+      if (this.activePopoverElement) {
+        if (this.trigger?.includes("mouseenter")) {
+          this.activePopoverElement.removeEventListener("mouseenter", this.onMouseEnteredTriggerOrPopup);
+          this.activePopoverElement.removeEventListener("mouseleave", this.onMouseLeaveTriggerOrPopup);
         }
       }
     }
@@ -447,13 +464,8 @@ export namespace Popover {
       }
     }
 
-    private createInstance() {
-      if (!this.triggerElement) {
-        console.warn("No trigger element not creating popper instance");
-        return;
-      }
-
-      this.popperInstance = createPopper(this.triggerElement, this.popoverContainer, {
+    private createPopoverInstance(triggerElement: HTMLElement, popoverContainer: HTMLElement) {
+      this.popperInstance = createPopper(triggerElement, popoverContainer, {
         onFirstUpdate: () => {
           // We need to find all focusable elements, after Popper finish its positioning calculation
           if (this.isOpen) {
@@ -503,6 +515,15 @@ export namespace Popover {
       });
     }
 
+    private createInstance() {
+      if (!this.triggerElement) {
+        console.warn("No trigger element not creating popper instance");
+        return;
+      }
+
+      this.createPopoverInstance(this.triggerElement, this.popoverContainer);
+    }
+
     private destroyInstance() {
       if (this.popperInstance) {
         this.popperInstance.destroy();
@@ -526,7 +547,9 @@ export namespace Popover {
       }
 
       if (newValue) {
-        this.createInstance();
+        if (!this.usePortal) {
+          this.createInstance();
+        }
 
         this.dispatchPopoverIsOpenChanged(newValue);
 
@@ -544,6 +567,7 @@ export namespace Popover {
         this.popoverContainer?.setAttribute("data-show", "");
       } else {
         this.destroyInstance();
+        this.activePopoverElement = null;
 
         window.removeEventListener("blur", this.onWindowBlurEvent);
         document.removeEventListener("click", this.onOutsideOverlayClick);
@@ -557,6 +581,77 @@ export namespace Popover {
       }
     }
 
+    private handlePortalRendered(event: CustomEvent) {
+      const { container } = event.detail;
+
+      // Store reference to popover in portal for events and positioning
+      this.portalPopoverContentComponent = (container as HTMLElement).querySelector<PopoverContent>(
+        "md-popover-content"
+      );
+
+      this.activePopoverElement = this.portalPopoverContentComponent?.popoverContainer;
+
+      // Set up event listeners for hover behavior
+      if (this.trigger?.includes("mouseenter") && this.activePopoverElement) {
+        this.activePopoverElement.addEventListener("mouseenter", this.onMouseEnteredTriggerOrPopup);
+        this.activePopoverElement.addEventListener("mouseleave", this.onMouseLeaveTriggerOrPopup);
+      }
+
+      // Show the popover
+      this.activePopoverElement?.setAttribute("data-show", "");
+
+      // Create popper instance with the portal element
+      this.createPortalInstance();
+    }
+
+    private createPortalInstance() {
+      if (!this.triggerElement || !this.activePopoverElement) return;
+      const theArrow = this.portalPopoverContentComponent?.popoverArrow;
+
+      this.popperInstance = createPopper(this.triggerElement, this.activePopoverElement, {
+        placement: this.placement,
+        strategy: this.positioningStrategy,
+        modifiers: [
+          ...defaultModifiers,
+          flip,
+          offset,
+          preventOverflow,
+          arrow,
+          {
+            name: "preventOverflow",
+            options: {
+              padding: 16
+            }
+          },
+          {
+            name: "offset",
+            options: {
+              offset: (({ placement }) => {
+                if (placement === "left" || placement === "right") {
+                  return [this.offsetDistance, ARROW_HEIGHT];
+                } else {
+                  return [0, this.showArrow ? ARROW_HEIGHT + this.offsetDistance : this.offsetDistance];
+                }
+              }) as OffsetsFunction
+            }
+          },
+          {
+            name: "arrow",
+            options: {
+              element: theArrow,
+              padding: ARROW_HEIGHT
+            }
+          },
+          {
+            name: "computeStyles",
+            options: {
+              adaptive: false
+            }
+          }
+        ]
+      });
+    }
+
     private dispatchPopoverIsOpenChanged(isOpen: boolean) {
       this.dispatchEvent(
         new CustomEvent("popover-open-changed", {
@@ -567,45 +662,40 @@ export namespace Popover {
       );
     }
 
-    private get popoverClassMap() {
-      return {
-        "md-popover": true,
-        inverted: this.inverted
-      };
-    }
-
-    private get renderPopoverTemplate() {
-      return html` <div
-        part="popover"
-        class="popover-container"
-        role=${this.role}
-        aria-modal=${ifDefined(this.interactive ? "true" : undefined)}
-        aria-label=${ifDefined(this.ariaLabel ?? undefined)}
-      >
-        ${this.showClose
-          ? html`<md-button
-              class="cancel-icon-button"
-              size="20"
-              hasRemoveStyle
-              circle
-              @button-click=${() => (this.isOpen = false)}
-            >
-              <md-icon name="cancel-bold" size="16" iconSet="momentumDesign"></md-icon>
-            </md-button>`
-          : nothing}
-        ${this.showArrow ? html`<div id="arrow" class="popover-arrow"></div>` : nothing}
-        <div class="popover-content" part="popover-content">
-          <slot @slotchange=${this.onContentSlotChanged}></slot>
-        </div>
-      </div>`;
+    private get renderPopoverContentTemplate() {
+      return html`
+        <md-popover-content
+          ?show-arrow=${this.showArrow}
+          ?show-close=${this.showClose}
+          role=${this.role}
+          ?interactive=${this.interactive}
+          aria-label=${ifDefined(this.ariaLabel ?? undefined)}
+          ?inverted=${this.inverted}
+          .contentTemplate=${this.contentTemplate}
+          @popover-close=${() => (this.isOpen = false)}
+          @popover-content-changed=${this.onContentSlotChanged}
+        >
+          <slot></slot>
+        </md-popover-content>
+      `;
     }
 
     render() {
       return html`
-        <div class=${classMap(this.popoverClassMap)}>
-          <slot name="triggerElement" aria-expanded=${this.isOpen}></slot>
-          ${this.renderPopoverTemplate}
-        </div>
+        <slot name="triggerElement" aria-expanded=${this.isOpen}></slot>
+
+        ${!this.usePortal ? this.renderPopoverContentTemplate : nothing}
+        ${this.usePortal && this.isOpen
+          ? html`
+              <md-portal
+                .open=${true}
+                .target=${this.portalTarget}
+                .contentTemplate=${this.renderPopoverContentTemplate}
+                .portalClass=${"md-popover-portal"}
+                @portal-rendered=${this.handlePortalRendered}
+              ></md-portal>
+            `
+          : nothing}
       `;
     }
   }

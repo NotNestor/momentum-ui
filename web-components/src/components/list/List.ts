@@ -196,9 +196,10 @@ export namespace List {
     }
 
     handleKeyDown(event: KeyboardEvent) {
-      const target = event.target as HTMLElement;
+      const path = event.composedPath();
+      const originalTarget = path[0] as HTMLElement;
 
-      if (this.shouldElementHandleKey(target, event.code)) {
+      if (this.shouldElementHandleKey(originalTarget, event.code)) {
         // Let the element handle its own keyboard navigation
         return;
       }
@@ -214,32 +215,30 @@ export namespace List {
         case Key.ArrowUp:
         case Key.ArrowLeft:
           event.preventDefault();
-          {
-            if (this.selected === 0) {
-              this.switchListItemOnArrowPress(this.slotted.length - 1, -1);
-            } else {
-              this.switchListItemOnArrowPress(this.selected - 1, -1);
-            }
+
+          if (this.selected === 0) {
+            this.switchListItemOnArrowPress(this.slotted.length - 1, -1);
+          } else {
+            this.switchListItemOnArrowPress(this.selected - 1, -1);
           }
+
           break;
         case Key.ArrowDown:
         case Key.ArrowRight:
           event.preventDefault();
-          {
-            if (this.selected === this.slotted.length - 1) {
-              this.switchListItemOnArrowPress(0);
-            } else {
-              this.switchListItemOnArrowPress(this.selected + 1);
-            }
+
+          if (this.selected === this.slotted.length - 1) {
+            this.switchListItemOnArrowPress(0);
+          } else {
+            this.switchListItemOnArrowPress(this.selected + 1);
           }
+
           break;
         case Key.Enter:
         case Key.Space:
-          {
-            if (!this.isListItemDisabled(this.selected)) {
-              this.setActivated(this.selected);
-              this.notifySelectedChange();
-            }
+          if (!this.isListItemDisabled(this.selected)) {
+            this.setActivated(this.selected);
+            this.notifySelectedChange();
           }
           break;
         default:

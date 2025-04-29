@@ -63,6 +63,18 @@ export class PopoverTemplateSandbox extends LitElement {
     ];
   }
 
+  get sortTemplate() {
+    return html`
+      <md-radiogroup checked="0" style="background-color: #fff;">
+        ${repeat(
+          this.sortOptions,
+          (item) => item.sortValue,
+          (item) => html`<md-radio slot="radio" value=${item.sortValue}> ${item.sortLabel} </md-radio>`
+        )}
+      </md-radiogroup>
+    `;
+  }
+
   render() {
     return html`
       <div class="popover-trigger-element-container">
@@ -173,10 +185,12 @@ export class PopoverTemplateSandbox extends LitElement {
       <div style="width: 100px; overflow: hidden; margin-top: 12px;">
         <md-tooltip placement="bottom" message="Sort" ?disabled=${this.isButtonWithTooltipPopoverOpen}>
           <md-popover
-            placement="bottom"
-            positioning-strategy="fixed"
-            trigger="click"
+            placement="right"
+            trigger="manual"
+            is-open
             interactive
+            use-protal
+            .contentTemplate=${this.sortTemplate}
             @popover-open-changed=${(e: CustomEvent) => {
               this.isButtonWithTooltipPopoverOpen = e.detail.isOpen;
             }}
@@ -185,14 +199,6 @@ export class PopoverTemplateSandbox extends LitElement {
               <md-icon slot="icon" iconSet="momentumDesign" name="unsorted-bold" size="16" ariaHidden="true"></md-icon>
               <span slot="text">Sort</span>
             </md-button>
-
-            <md-radiogroup checked="0">
-              ${repeat(
-                this.sortOptions,
-                (item) => item.sortValue,
-                (item) => html`<md-radio slot="radio" value=${item.sortValue}> ${item.sortLabel} </md-radio>`
-              )}
-            </md-radiogroup>
           </md-popover>
         </md-tooltip>
       </div>
